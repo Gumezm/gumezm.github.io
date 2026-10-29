@@ -1,0 +1,35 @@
+---
+---
+
+@use 'abstracts/variables' with (
+  $theme: '{{ site.theme_mode }}',
+  $font-family-base: (
+    -apple-system,
+    'Alibaba PuHuiTi 3.0',
+    'MiSans',
+    'PingFang SC',
+    'Source Han Sans SC',
+    'Noto Sans CJK SC',
+    'Microsoft Yahei',
+    sans-serif
+  ),
+  $font-family-heading: (
+    -apple-system,
+    'Alibaba PuHuiTi 3.0',
+    'MiSans',
+    'PingFang SC',
+    'Source Han Sans SC',
+    'Noto Sans CJK SC',
+    'Microsoft Yahei',
+    sans-serif
+  )
+);
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
