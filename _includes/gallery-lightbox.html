@@ -39,7 +39,7 @@
 
     function syncUrl() {
       const url = new URL(window.location.href);
-      url.searchParams.delete('category'); // 相册分类已停用，清掉旧链接里的参数
+      url.searchParams.delete('category'); /* 相册分类已停用，清掉旧链接里的参数 */
       if (state.tag) url.searchParams.set('tag', state.tag);
       else url.searchParams.delete('tag');
       history.replaceState(null, '', url);
