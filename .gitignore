@@ -26,6 +26,9 @@ package-lock.json
 _sass/vendors
 assets/js/dist
 
+# Gallery originals (processed copies live in assets/img/gallery)
+photos_src
+
 # Hidden system files
 *~
 .DS_Store

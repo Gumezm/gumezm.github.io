@@ -1,0 +1,11 @@
+# 相册数据。可由 tools/process-gallery.py 自动生成，手写的 caption / tags 在重跑时会保留。
+- src: /assets/img/gallery/2026-10-31-01.webp
+  thumb: /assets/img/gallery/2026-10-31-01.thumb.webp
+  width: 832
+  height: 1216
+  taken: 2026-10-31 16:31
+  caption: ""
+  categories:
+    - 图片
+  tags:
+    - AI
