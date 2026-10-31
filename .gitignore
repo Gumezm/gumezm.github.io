@@ -29,6 +29,9 @@ assets/js/dist
 # Gallery originals (processed copies live in assets/img/gallery)
 photos_src
 
+# Temporary image workspace
+.addimage/
+
 # Hidden system files
 *~
 .DS_Store
