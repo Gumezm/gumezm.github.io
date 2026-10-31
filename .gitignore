@@ -6,6 +6,7 @@ Gemfile.lock
 # Jekyll cache
 .jekyll-cache
 .jekyll-metadata
+.sass-cache
 _site
 
 # RubyGems
@@ -14,6 +15,13 @@ _site
 # NPM dependencies
 node_modules
 package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Logs
+*.log
 
 # IDE configurations
 .idea
@@ -36,3 +44,7 @@ photos_src
 *~
 .DS_Store
 Thumbs.db
+ehthumbs.db
+desktop.ini
+.Spotlight-V100
+.Trashes
