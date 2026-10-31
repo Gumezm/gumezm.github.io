@@ -1,6 +1,10 @@
 tabs:
   gallery: 相册
 
+theme:
+  light: Light
+  dark: Dark
+
 copyright:
   # Displayed in the footer
   brief: 版权所有

@@ -110,6 +110,17 @@
 
   <!-- Scripts -->
 
+  <!-- 首次访问默认为 Light，站点只提供 Light / Dark 两种模式 -->
+  <script>
+    (function () {
+      try {
+        if (!localStorage.getItem('theme')) {
+          localStorage.setItem('theme', 'light');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <script src="{{ '/assets/js/dist/theme.min.js' | relative_url }}"></script>
 
   {% include js-selector.html lang=lang %}

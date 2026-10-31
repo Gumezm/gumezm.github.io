@@ -155,6 +155,11 @@
   background: rgba(0, 0, 0, 0.92);
 }
 
+/* #tail-wrapper adds a top margin to every child; the overlay must stay full-viewport */
+#tail-wrapper > .gallery-lightbox {
+  margin-top: 0;
+}
+
 .gallery-lightbox[hidden] {
   display: none;
 }
@@ -173,6 +178,26 @@
   max-height: 82vh;
   object-fit: contain;
   border-radius: 0.25rem;
+}
+
+.gallery-lb-stage img.gallery-lb-fade {
+  animation: gallery-lb-fade 0.28s ease-out;
+}
+
+@keyframes gallery-lb-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-lb-stage img.gallery-lb-fade {
+    animation: none;
+  }
 }
 
 .gallery-lb-stage figcaption {
@@ -259,4 +284,20 @@ body.gallery-lb-open {
   .gallery-lb-stage img {
     max-height: 72vh;
   }
+}
+
+/* --- Theme toggle --- */
+
+/* 站点只提供 Light / Dark，隐藏主题自带的 system 选项 */
+.sidebar-bottom .dropdown-item[data-theme-mode='system'] {
+  display: none !important;
+}
+
+/* --- Footer --- */
+
+/* 整体略微下移、右移，负的右外边距让桌面端右侧的署名也一起偏移 */
+footer[aria-label='Site Info'] {
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  margin-right: -0.5rem;
 }

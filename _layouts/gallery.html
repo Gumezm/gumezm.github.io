@@ -1,17 +1,14 @@
 ---
 layout: default
+tail_includes: ['gallery-lightbox']
 ---
 
 {% include lang.html %}
 
 {% assign photos = site.data.gallery | sort: 'taken' | reverse %}
-{% assign cats = '' | split: '' %}
 {% assign tag_names = '' | split: '' %}
 
 {% for photo in photos %}
-  {% for c in photo.categories %}
-    {% unless cats contains c %}{% assign cats = cats | push: c %}{% endunless %}
-  {% endfor %}
   {% for t in photo.tags %}
     {% unless tag_names contains t %}{% assign tag_names = tag_names | push: t %}{% endunless %}
   {% endfor %}
@@ -22,20 +19,8 @@ layout: default
 
   <div class="content">
     {% if photos.size > 0 %}
-      <div class="gallery-toolbar">
-        {% if cats.size > 0 %}
-          <div class="gallery-filter-row" role="group" aria-label="按分类筛选">
-            <span class="gallery-filter-label">分类</span>
-            <button type="button" class="gallery-chip" data-filter="category" data-value="" aria-pressed="true">全部</button>
-            {% for c in cats %}
-              <button type="button" class="gallery-chip" data-filter="category" data-value="{{ c | escape }}" aria-pressed="false">
-                {{- c -}}
-              </button>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        {% if tag_names.size > 0 %}
+      {% if tag_names.size > 0 %}
+        <div class="gallery-toolbar">
           <div class="gallery-filter-row" role="group" aria-label="按标签筛选">
             <span class="gallery-filter-label">标签</span>
             <button type="button" class="gallery-chip" data-filter="tag" data-value="" aria-pressed="true">全部</button>
@@ -45,8 +30,8 @@ layout: default
               </button>
             {% endfor %}
           </div>
-        {% endif %}
-      </div>
+        </div>
+      {% endif %}
 
       {% assign last_year = '' %}
       {% for photo in photos %}
@@ -59,18 +44,13 @@ layout: default
           {% assign last_year = year %}
         {% endif %}
 
-        <figure
-          class="gallery-card"
-          data-cats="{{ photo.categories | join: '|' | escape }}"
-          data-tags="{{ photo.tags | join: '|' | escape }}"
-        >
+        <figure class="gallery-card" data-tags="{{ photo.tags | join: '|' | escape }}">
           <a
             class="gallery-link"
             href="{{ photo.src | relative_url }}"
             data-full="{{ photo.src | relative_url }}"
             data-caption="{{ photo.caption | escape }}"
             data-taken="{{ photo.taken | escape }}"
-            data-cats="{{ photo.categories | join: '、' | escape }}"
             data-tags="{{ photo.tags | join: '、' | escape }}"
           >
             <img
@@ -97,165 +77,3 @@ layout: default
     {% endif %}
   </div>
 </article>
-
-<div class="gallery-lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="照片预览" hidden>
-  <button type="button" class="gallery-lb-btn gallery-lb-close" aria-label="关闭">&times;</button>
-  <button type="button" class="gallery-lb-btn gallery-lb-prev" aria-label="上一张">&#10094;</button>
-  <button type="button" class="gallery-lb-btn gallery-lb-next" aria-label="下一张">&#10095;</button>
-  <figure class="gallery-lb-stage">
-    <img id="gallery-lb-img" src="" alt="">
-    <figcaption>
-      <span id="gallery-lb-meta"></span>
-      <span id="gallery-lb-caption"></span>
-    </figcaption>
-  </figure>
-</div>
-
-<script>
-  (function () {
-    const grid = document.querySelector('.gallery-page');
-    if (!grid) return;
-
-    const cards = Array.from(document.querySelectorAll('.gallery-card'));
-    const chips = Array.from(document.querySelectorAll('.gallery-chip'));
-    const empty = document.querySelector('.gallery-empty');
-    const groups = Array.from(document.querySelectorAll('.gallery-year-group'));
-    const lightbox = document.getElementById('gallery-lightbox');
-    const lbImg = document.getElementById('gallery-lb-img');
-    const lbMeta = document.getElementById('gallery-lb-meta');
-    const lbCaption = document.getElementById('gallery-lb-caption');
-    const lbPrev = lightbox.querySelector('.gallery-lb-prev');
-    const lbNext = lightbox.querySelector('.gallery-lb-next');
-
-    const state = { category: '', tag: '' };
-    let visibleLinks = [];
-    let currentIndex = 0;
-
-    const splitAttr = (el, name) => (el.dataset[name] || '').split('|').filter(Boolean);
-
-    function matches(card) {
-      if (state.category && !splitAttr(card, 'cats').includes(state.category)) return false;
-      if (state.tag && !splitAttr(card, 'tags').includes(state.tag)) return false;
-      return true;
-    }
-
-    function syncUrl() {
-      const url = new URL(window.location.href);
-      if (state.category) url.searchParams.set('category', state.category);
-      else url.searchParams.delete('category');
-      if (state.tag) url.searchParams.set('tag', state.tag);
-      else url.searchParams.delete('tag');
-      history.replaceState(null, '', url);
-    }
-
-    function refresh() {
-      let shown = 0;
-      cards.forEach((card) => {
-        const ok = matches(card);
-        card.hidden = !ok;
-        if (ok) shown += 1;
-      });
-
-      groups.forEach((group) => {
-        group.hidden = !group.querySelector('.gallery-card:not([hidden])');
-      });
-
-      if (empty) empty.hidden = shown > 0;
-
-      chips.forEach((chip) => {
-        const active = (state[chip.dataset.filter] || '') === chip.dataset.value;
-        chip.classList.toggle('is-active', active);
-        chip.setAttribute('aria-pressed', active ? 'true' : 'false');
-      });
-
-      syncUrl();
-    }
-
-    chips.forEach((chip) => {
-      chip.addEventListener('click', () => {
-        state[chip.dataset.filter] = chip.dataset.value;
-        refresh();
-      });
-    });
-
-    function currentList() {
-      return Array.from(document.querySelectorAll('.gallery-card:not([hidden]) .gallery-link'));
-    }
-
-    function renderLightbox(index) {
-      visibleLinks = currentList();
-      if (!visibleLinks.length) return;
-      currentIndex = (index + visibleLinks.length) % visibleLinks.length;
-      const link = visibleLinks[currentIndex];
-      lbImg.src = link.dataset.full;
-      lbImg.alt = link.dataset.caption || '照片';
-      lbMeta.textContent = [link.dataset.taken, link.dataset.cats, link.dataset.tags]
-        .filter(Boolean)
-        .join(' · ');
-      lbCaption.textContent = link.dataset.caption || '';
-      lbPrev.hidden = lbNext.hidden = visibleLinks.length < 2;
-
-      const next = visibleLinks[(currentIndex + 1) % visibleLinks.length];
-      if (next && next !== link) new Image().src = next.dataset.full;
-    }
-
-    function openLightbox(link) {
-      visibleLinks = currentList();
-      const index = visibleLinks.indexOf(link);
-      renderLightbox(index < 0 ? 0 : index);
-      lightbox.hidden = false;
-      document.body.classList.add('gallery-lb-open');
-      lightbox.querySelector('.gallery-lb-close').focus();
-    }
-
-    function closeLightbox() {
-      lightbox.hidden = true;
-      document.body.classList.remove('gallery-lb-open');
-      lbImg.src = '';
-    }
-
-    document.querySelectorAll('.gallery-link').forEach((link) => {
-      link.addEventListener('click', (event) => {
-        event.preventDefault();
-        openLightbox(link);
-      });
-    });
-
-    lightbox.querySelector('.gallery-lb-close').addEventListener('click', closeLightbox);
-    lbPrev.addEventListener('click', () => renderLightbox(currentIndex - 1));
-    lbNext.addEventListener('click', () => renderLightbox(currentIndex + 1));
-
-    lightbox.addEventListener('click', (event) => {
-      if (event.target === lightbox) closeLightbox();
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (lightbox.hidden) return;
-      if (event.key === 'Escape') closeLightbox();
-      else if (event.key === 'ArrowLeft') renderLightbox(currentIndex - 1);
-      else if (event.key === 'ArrowRight') renderLightbox(currentIndex + 1);
-    });
-
-    let touchStartX = null;
-    lightbox.addEventListener('touchstart', (event) => {
-      touchStartX = event.changedTouches[0].clientX;
-    }, { passive: true });
-    lightbox.addEventListener('touchend', (event) => {
-      if (touchStartX === null) return;
-      const delta = event.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(delta) > 50) renderLightbox(currentIndex + (delta < 0 ? 1 : -1));
-      touchStartX = null;
-    }, { passive: true });
-
-    const params = new URLSearchParams(window.location.search);
-    state.category = params.get('category') || '';
-    state.tag = params.get('tag') || '';
-    // 丢弃 URL 中不存在的筛选值，避免出现空白页面
-    const catValues = chips.filter((c) => c.dataset.filter === 'category').map((c) => c.dataset.value);
-    const tagValues = chips.filter((c) => c.dataset.filter === 'tag').map((c) => c.dataset.value);
-    if (state.category && !catValues.includes(state.category)) state.category = '';
-    if (state.tag && !tagValues.includes(state.tag)) state.tag = '';
-
-    refresh();
-  })();
-</script>

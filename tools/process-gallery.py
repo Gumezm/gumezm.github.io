@@ -2,8 +2,8 @@
 """Process photos for the gallery page.
 
 Usage:
-    python tools/process-gallery.py photos_src/旅行/*.jpg --category 旅行 --tags 川西,山
-    python tools/process-gallery.py photos_src/日常/ --category 日常
+    python tools/process-gallery.py photos_src/旅行/*.jpg --tags 川西,山
+    python tools/process-gallery.py photos_src/日常/ --tags 日常
 
 For every input image the script:
   * auto-orients, strips EXIF (including GPS), keeps the ICC profile
@@ -91,7 +91,6 @@ def yaml_entry(entry: dict) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Process photos into the gallery.")
     parser.add_argument("paths", nargs="+", help="image files or directories")
-    parser.add_argument("--category", action="append", default=[], help="category name, repeatable")
     parser.add_argument("--tags", default="", help="comma separated tags")
     parser.add_argument("--caption", default="", help="caption applied to every processed image")
     args = parser.parse_args()
@@ -101,7 +100,6 @@ def main() -> int:
         print("no images found", file=sys.stderr)
         return 1
 
-    categories = args.category or ["未分类"]
     tags = [tag.strip() for tag in args.tags.split(",") if tag.strip()]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -135,7 +133,6 @@ def main() -> int:
             "height": full.height,
             "taken": taken.strftime("%Y-%m-%d %H:%M"),
             "caption": args.caption,
-            "categories": categories,
             "tags": tags,
         }
         with DATA_FILE.open("a", encoding="utf-8") as handle:
