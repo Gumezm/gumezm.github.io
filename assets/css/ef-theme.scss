@@ -1471,7 +1471,7 @@ html[data-ef='ef'] #ef-toggle::before {
   background: var(--ef-panel);
   /* the fill must stay 1px inside the outer chamfer too, so its cut is deeper;
      the diagonal band is ~1.5px wide to survive antialiasing */
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8.2px), calc(100% - 8.2px) 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7.7px), calc(100% - 7.7px) 100%, 0 100%);
   transition: background-color 0.16s var(--ef-mech);
 }
 
