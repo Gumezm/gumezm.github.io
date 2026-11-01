@@ -16,6 +16,9 @@ _site
 node_modules
 package-lock.json
 
+# Wrangler local state
+.wrangler/
+
 # Python
 __pycache__/
 *.py[cod]

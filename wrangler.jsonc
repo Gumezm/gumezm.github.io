@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "blogc",
+  "compatibility_date": "2026-10-26",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "_site"
+  },
+  "build": {
+    // 构建命令必须是 Bundler，不能加 npx（npx 会去 npm 里找 bundle 包而失败）
+    "command": "bundle exec jekyll build"
+  }
+}
