@@ -14,7 +14,7 @@ layout: default
   {% assign head_title = site.data.locales[lang].tabs[head_key] | default: page.title %}
   {% include ef-page-head.html title=head_title %}
 {% elsif page.url == '/404.html' %}
-  {% include ef-page-head.html title='页面不存在' eyebrow='404' %}
+  {% include ef-page-head.html title='Page not found' eyebrow='404' %}
 {% endif %}
 
 <article class="px-1">
