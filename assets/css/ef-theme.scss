@@ -1124,11 +1124,13 @@ html[data-ef='ef'] #panel-wrapper .content a:hover {
   color: var(--ef-ink);
 }
 
-/* the panel tags keep Bootstrap's blue hover fill; the label goes amber */
+/* panel tags: hover flips to a yellow fill with the blue label */
 html[data-ef='ef'] #panel-wrapper .post-tag:hover,
 html[data-ef='ef'] #panel-wrapper .post-tag:focus-visible,
 html[data-ef='ef'] #panel-wrapper .post-tag:active {
-  color: #fdd400 !important;
+  background-color: #fdd400;
+  border-color: #fdd400 !important;
+  color: #0d6efd !important;
 }
 
 /* ---------- 8. archives / categories / tags ---------- */
