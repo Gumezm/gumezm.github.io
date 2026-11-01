@@ -1535,14 +1535,8 @@ html[data-ef='ef'] #ef-toggle[aria-pressed='true'] .ef-switch-label {
 
 /* ---------- 13. 404 page ---------- */
 
-html[data-ef='ef'] .not-found-lead {
-  margin: 1.5rem 0 1.25rem;
-  color: var(--ef-ink-2);
-  font-size: 1.05rem;
-}
-
 html[data-ef='ef'] .not-found-figure {
-  margin: 0 0 1.5rem;
+  margin: 1.5rem 0;
 }
 
 html[data-ef='ef'] .not-found-figure img {
