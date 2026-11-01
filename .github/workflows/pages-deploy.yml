@@ -56,8 +56,8 @@ jobs:
           touch _site/.nojekyll
           cd _site
           git init -q -b gh-pages
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Gumezm"
+          git config user.email "gumezm@qq.com"
           git add -A
           git commit -qm "Deploy ${GITHUB_SHA::7}"
           git push -f "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:gh-pages
