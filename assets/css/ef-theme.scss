@@ -347,8 +347,13 @@ html[data-ef='ef'] #sidebar nav .nav-link i {
   color: var(--ef-ink-2);
 }
 
-html[data-ef='ef'] #sidebar .nav-item:not(.active) .nav-link:hover {
-  background: var(--ef-chip);
+/* hover also fills the whole row (same box as the selected block) */
+html[data-ef='ef'] #sidebar .nav-item:not(.active):hover {
+  background-color: var(--ef-chip);
+}
+
+html[data-ef='ef'] #sidebar .nav-item:not(.active):hover .nav-link,
+html[data-ef='ef'] #sidebar .nav-item:not(.active):hover .nav-link i {
   color: var(--ef-ink);
 }
 
