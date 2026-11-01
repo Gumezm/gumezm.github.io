@@ -1533,7 +1533,38 @@ html[data-ef='ef'] #ef-toggle[aria-pressed='true'] .ef-switch-label {
   color: var(--ef-on-signal);
 }
 
-/* ---------- 12. motion preferences ---------- */
+/* ---------- 13. 404 page ---------- */
+
+html[data-ef='ef'] .not-found-lead {
+  margin: 1.5rem 0 1.25rem;
+  color: var(--ef-ink-2);
+  font-size: 1.05rem;
+}
+
+html[data-ef='ef'] .not-found-figure {
+  margin: 0 0 1.5rem;
+}
+
+html[data-ef='ef'] .not-found-figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .not-found-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0;
+  font-weight: 700;
+}
+
+html[data-ef='ef'] .not-found-sep {
+  color: var(--ef-rule);
+  font-weight: 400;
+}
+
+/* ---------- 14. motion preferences ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   html[data-ef='ef'] *,
