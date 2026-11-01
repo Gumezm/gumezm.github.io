@@ -1099,6 +1099,11 @@ html[data-ef='ef'] #panel-wrapper .content a {
   color: var(--ef-ink-2);
 }
 
+/* recent-post titles in the panel read as labels, so they are bold by default */
+html[data-ef='ef'] #access-lastmod a {
+  font-weight: 700;
+}
+
 html[data-ef='ef'] #panel-wrapper .content a:hover {
   color: var(--ef-ink);
 }
