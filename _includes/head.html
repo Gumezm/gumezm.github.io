@@ -1,4 +1,15 @@
 <head>
+  <!-- EF theme: apply the saved style before the first paint -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem('ef-theme') === 'ef') {
+          document.documentElement.setAttribute('data-ef', 'ef');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
@@ -87,6 +98,9 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ '/assets/css/:THEME.css' | replace: ':THEME', site.theme | relative_url }}">
 
+  <!-- EF theme style (every rule is scoped to html[data-ef="ef"]) -->
+  <link rel="stylesheet" href="{{ '/assets/css/ef-theme.css' | relative_url }}">
+
   <!-- Web Font -->
   <link rel="stylesheet" href="{{ site.data.origin[type].webfonts | relative_url }}">
 
@@ -122,6 +136,9 @@
   </script>
 
   <script src="{{ '/assets/js/dist/theme.min.js' | relative_url }}"></script>
+
+  <!-- EF theme switch (ORI <-> EF) -->
+  <script defer src="{{ '/assets/js/ef-theme.js' | relative_url }}"></script>
 
   {% include js-selector.html lang=lang %}
 
