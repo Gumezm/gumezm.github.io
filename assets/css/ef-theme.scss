@@ -299,13 +299,18 @@ html[data-ef='ef'] .site-subtitle::before {
   content: '// ';
 }
 
-/* the hairline above the list is drawn, not a border, so the rows sit exactly
-   where ORI puts them */
+/* the top hairline sits 1px above the first row (on the paper), so a selected
+   first row cannot paint over it */
 html[data-ef='ef'] #sidebar nav {
-  background-image: linear-gradient(var(--ef-rule), var(--ef-rule));
-  background-position: left top;
-  background-repeat: no-repeat;
-  background-size: 100% 1px;
+  position: relative;
+}
+
+html[data-ef='ef'] #sidebar nav::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto 0;
+  height: 1px;
+  background: var(--ef-rule);
 }
 
 /* hairline between rows drawn as a background so row heights stay identical to ORI */
@@ -314,6 +319,14 @@ html[data-ef='ef'] #sidebar .nav-item {
   background-position: left bottom;
   background-repeat: no-repeat;
   background-size: 100% 1px;
+}
+
+/* ORI spaces the rows with a 4px top margin; EF turns that gap into padding so
+   rows touch, each row still starts on the same pixel and the selected block
+   fills the space between two dividers */
+html[data-ef='ef'] #sidebar .nav-item:not(:first-child) {
+  margin-top: 0;
+  padding-top: 0.25rem;
 }
 
 /* the selected row fills the whole row (so it lines up with the dividers) and
