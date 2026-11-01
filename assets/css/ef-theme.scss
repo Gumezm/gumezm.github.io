@@ -173,6 +173,11 @@ html[data-ef='ef'][data-bs-theme='dark'] {
   }
 }
 
+/* shared by both themes */
+html[data-ef='ef'] {
+  --ef-link-hover: #2dbaba;
+}
+
 /* ---------- 2. base ---------- */
 
 /* The EF look has no rounded corners and no soft shadows. Scoped, so ORI is
@@ -713,8 +718,23 @@ html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink) {
 }
 
 html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink):hover {
-  background: var(--ef-mark);
-  border-bottom-color: var(--ef-ink);
+  border-bottom-color: var(--ef-link-hover);
+}
+
+/* Chirpy paints every link hover terracotta (#d2603a, forced with !important);
+   EF uses the teal hover colour instead. The selectors mirror that rule. */
+html[data-ef='ef'] #page-category a:hover,
+html[data-ef='ef'] #page-tag a:hover,
+html[data-ef='ef'] #access-lastmod a:hover,
+html[data-ef='ef'] .post-tail-wrapper .license-wrapper > a:hover,
+html[data-ef='ef'] .post-edit > a:hover,
+html[data-ef='ef'] #search-results a:hover,
+html[data-ef='ef'] footer a:hover,
+html[data-ef='ef'] #topbar #breadcrumb a:hover,
+html[data-ef='ef'] .post-meta a:not([class]):hover,
+html[data-ef='ef'] .content a:not(.img-link):hover {
+  color: var(--ef-link-hover) !important;
+  border-bottom-color: var(--ef-link-hover);
 }
 
 html[data-ef='ef'] .content h2,
@@ -1102,6 +1122,13 @@ html[data-ef='ef'] #panel-wrapper .content a {
 
 html[data-ef='ef'] #panel-wrapper .content a:hover {
   color: var(--ef-ink);
+}
+
+/* the panel tags keep Bootstrap's blue hover fill; the label goes amber */
+html[data-ef='ef'] #panel-wrapper .post-tag:hover,
+html[data-ef='ef'] #panel-wrapper .post-tag:focus-visible,
+html[data-ef='ef'] #panel-wrapper .post-tag:active {
+  color: #fdd400 !important;
 }
 
 /* ---------- 8. archives / categories / tags ---------- */
