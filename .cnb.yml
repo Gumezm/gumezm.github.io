@@ -1,0 +1,46 @@
+# CNB 流水线：推送到 main 时构建站点，部署到 EdgeOne Pages，再同步回 GitHub。
+#
+# 一次性准备工作见仓库外的说明，简版：
+# 1. EdgeOne Pages 建一个「直接上传」类型的项目，名字与下面 EO_PROJECT 一致；
+# 2. 在该项目里创建 API Token；
+# 3. CNB 上建一个密钥仓库（如 Gumezm/secrets），里面放 blog.yml：
+#      EDGEONE_PAGES_TOKEN: <EdgeOne API Token>
+#      GITHUB_TOKEN: <GitHub 个人访问令牌，勾 repo 权限>
+# 4. 把下面 imports 的地址改成你实际的密钥仓库路径。
+
+main:
+  push:
+    - name: 构建并部署博客
+      env:
+        EO_PROJECT: gumezm-blog
+        GITHUB_REPO: Gumezm/gumezm.github.io
+      imports:
+        - https://cnb.cool/Gumezm/secrets/-/blob/main/blog.yml
+      stages:
+        - name: 构建站点
+          image: ruby:3.4-bookworm
+          script: |
+            set -euo pipefail
+            bundle config set --local path vendor/bundle
+            bundle install --jobs 4
+            JEKYLL_ENV=production bundle exec jekyll b -d _site --config _config.yml,_config_eo.yml
+
+        - name: 部署到 EdgeOne Pages
+          image: tencentcom/deploy-eopages:latest
+          script: |
+            set -eu
+            if [ -z "${EDGEONE_PAGES_TOKEN:-}" ]; then
+              echo "缺少 EDGEONE_PAGES_TOKEN，请检查密钥仓库与 imports 地址"
+              exit 1
+            fi
+            edgeone pages deploy ./_site -n "$EO_PROJECT" -t "$EDGEONE_PAGES_TOKEN"
+
+        - name: 同步到 GitHub（让 GitHub Pages 跟着更新）
+          image: alpine/git:latest
+          script: |
+            set -eu
+            if [ -z "${GITHUB_TOKEN:-}" ]; then
+              echo "未配置 GITHUB_TOKEN，跳过 GitHub 同步"
+              exit 0
+            fi
+            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git" HEAD:main

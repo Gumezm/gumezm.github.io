@@ -1,0 +1,9 @@
+# EdgeOne Pages 专用覆盖配置
+#
+# 用法：bundle exec jekyll b --config _config.yml,_config_eo.yml
+#
+# 这里只放"跟托管平台有关"的差异项。GitHub Pages 的构建不读这个文件，
+# 仍然使用 _config.yml 里的 url。
+#
+# 绑了自定义域名之后，把下面这行改成你的域名（不要以 / 结尾）。
+url: "https://gumezm-blog.edgeone.app"
