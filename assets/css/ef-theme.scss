@@ -1439,40 +1439,50 @@ html[data-ef='ef'] .notification {
   letter-spacing: 0.06em;
 }
 
-/* EF look: cut corner, and yellow when EF is the current style. */
+/* EF look: the ink sits *outside* the yellow (a 1px ring that follows the cut
+   corner), the fill is drawn by ::before so the ring stays unbroken. */
 html[data-ef='ef'] #ef-toggle {
   position: relative;
-  border: 1px solid var(--ef-ink);
-  background: var(--ef-panel);
+  border: 0;
+  background: var(--ef-ink);
   color: var(--ef-ink);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+}
+
+html[data-ef='ef'] #ef-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--ef-panel);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4.6px), calc(100% - 4.6px) 100%, 0 100%);
   transition: background-color 0.16s var(--ef-mech);
 }
 
-/* the cut corner needs its own stroke, otherwise the outline looks open */
-html[data-ef='ef'] #ef-toggle::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(
-    to top right,
-    transparent calc(50% - 0.6px),
-    var(--ef-ink) calc(50% - 0.6px) calc(50% + 0.6px),
-    transparent calc(50% + 0.6px)
-  );
-  pointer-events: none;
+html[data-ef='ef'] #ef-toggle:hover {
+  background: var(--ef-ink);
 }
 
-html[data-ef='ef'] #ef-toggle:hover {
+html[data-ef='ef'] #ef-toggle:hover::before {
   background: var(--ef-chip);
 }
 
-html[data-ef='ef'] #ef-toggle[aria-pressed='true'] {
+html[data-ef='ef'] #ef-toggle[aria-pressed='true'],
+html[data-ef='ef'] #ef-toggle[aria-pressed='true']:hover {
+  background: var(--ef-ink);
+}
+
+html[data-ef='ef'] #ef-toggle[aria-pressed='true']::before,
+html[data-ef='ef'] #ef-toggle[aria-pressed='true']:hover::before {
   background: var(--ef-signal);
-  border-color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #ef-toggle .ef-switch-label {
+  position: relative;
+  z-index: 1;
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #ef-toggle[aria-pressed='true'] .ef-switch-label {
   color: var(--ef-on-signal);
 }
 
