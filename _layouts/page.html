@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+{% include lang.html %}
+
+{% if page.collection == 'tabs' %}
+  {% assign head_key = page.title | downcase %}
+  {% assign head_title = site.data.locales[lang].tabs[head_key] | default: page.title %}
+  {% include ef-page-head.html title=head_title %}
+{% endif %}
+
+<article class="px-1">
+  {% if page.layout == 'page' or page.collection == 'tabs' %}
+    {% assign tab_key = page.title | downcase %}
+    {% assign title = site.data.locales[lang].tabs[tab_key] | default: page.title %}
+    <h1 class="dynamic-title{% if page.collection == 'tabs' %} ef-orig-title{% endif %}">
+      {{ title }}
+    </h1>
+    <div class="content">
+      {{ content }}
+    </div>
+  {% else %}
+    {{ content }}
+  {% endif %}
+</article>

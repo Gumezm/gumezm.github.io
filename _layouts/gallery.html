@@ -14,8 +14,11 @@ tail_includes: ['gallery-lightbox']
   {% endfor %}
 {% endfor %}
 
+{% assign ef_gallery_title = site.data.locales[lang].tabs.gallery %}
+{% include ef-page-head.html title=ef_gallery_title %}
+
 <article class="px-1 gallery-page">
-  <h1 class="dynamic-title">{{ site.data.locales[lang].tabs.gallery }}</h1>
+  <h1 class="dynamic-title ef-orig-title">{{ site.data.locales[lang].tabs.gallery }}</h1>
 
   <div class="content">
     {% if photos.size > 0 %}

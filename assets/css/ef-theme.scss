@@ -1,0 +1,1545 @@
+---
+---
+
+/* ==========================================================================
+   EF theme layer for the Chirpy blog
+   --------------------------------------------------------------------------
+   Everything here is scoped to `html[data-ef="ef"]`, so the original theme
+   (ORI) renders exactly as before. Switch with #ef-toggle in the sidebar.
+   Built from the endfield-ui skill: paper + ink + one yellow, hairlines,
+   cut corners on pressable things, wide Latin labels, mechanical motion.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Saira';
+  src: url('../fonts/saira-var.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-stretch: 50% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 1. tokens ---------- */
+
+/* Chirpy declares its own palette on `:root[data-bs-theme='light'|'dark']`, so the
+   EF token block needs at least the same specificity to win. */
+html[data-ef='ef']:not([data-bs-theme]),
+html[data-ef='ef'][data-bs-theme] {
+  --ef-paper: #f4f4f2;
+  --ef-panel: #ffffff;
+  --ef-ink: #161616;
+  --ef-ink-2: #5c5c5c;
+  --ef-rule: #d9d9d6;
+  --ef-chip: #e4e4e0;
+  --ef-signal: #fffa00;
+  --ef-on-signal: #161616;
+  --ef-trace: var(--ef-ink);
+  --ef-tag-bg: #161616;
+  --ef-tag-fg: #ffffff;
+  --ef-danger: #b3261e;
+  --ef-tri-a: #ff00f0;
+  --ef-tri-c: #00ffa2;
+  --ef-mark: rgb(255 250 0 / 55%);
+
+  --ef-snap: cubic-bezier(0.16, 1, 0.3, 1);
+  --ef-mech: cubic-bezier(0.7, 0, 0.2, 1);
+
+  --ef-font: 'Saira', -apple-system, 'Alibaba PuHuiTi 3.0', 'MiSans', 'PingFang SC',
+    'Source Han Sans SC', 'Noto Sans CJK SC', 'Microsoft Yahei', sans-serif;
+  --ef-font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+  --ef-wide: 112%;
+  --ef-wider: 125%;
+
+  /* map Chirpy's own variables onto the EF palette */
+  --main-bg: var(--ef-paper);
+  --mask-bg: rgb(22 22 22 / 32%);
+  --main-border-color: var(--ef-rule);
+  --text-color: var(--ef-ink);
+  --text-muted-color: var(--ef-ink-2);
+  --text-muted-highlight-color: var(--ef-ink);
+  --heading-color: var(--ef-ink);
+  --label-color: var(--ef-ink-2);
+  --blockquote-border-color: var(--ef-ink);
+  --blockquote-text-color: var(--ef-ink-2);
+  --link-color: var(--ef-ink);
+  --link-underline-color: var(--ef-rule);
+  --button-bg: var(--ef-panel);
+  --btn-border-color: var(--ef-rule);
+  --btn-backtotop-color: var(--ef-ink);
+  --btn-backtotop-border-color: var(--ef-rule);
+  --checkbox-color: var(--ef-ink);
+  --checkbox-checked-color: var(--ef-ink);
+  --img-bg: var(--ef-panel);
+  --shimmer-bg: linear-gradient(90deg, transparent, var(--ef-chip), transparent);
+  --menu-bg: var(--ef-panel);
+  --menu-border-color: var(--ef-rule);
+  --menu-shadow-color: transparent;
+  --menu-active-color: var(--ef-ink);
+  --menu-highlight-bg: var(--ef-chip);
+  --site-title-color: var(--ef-ink);
+  --site-subtitle-color: var(--ef-ink-2);
+  --sidebar-bg: var(--ef-paper);
+  --sidebar-border-color: var(--ef-rule);
+  --sidebar-muted-color: var(--ef-ink-2);
+  --sidebar-active-color: var(--ef-ink);
+  --sidebar-hover-bg: var(--ef-chip);
+  --sidebar-btn-bg: var(--ef-panel);
+  --sidebar-btn-color: var(--ef-ink-2);
+  --avatar-border-color: var(--ef-rule);
+  --topbar-bg: var(--ef-paper);
+  --topbar-text-color: var(--ef-ink-2);
+  --search-border-color: var(--ef-rule);
+  --search-icon-color: var(--ef-ink-2);
+  --input-focus-border-color: var(--ef-ink);
+  --post-list-text-color: var(--ef-ink-2);
+  --btn-patinator-text-color: var(--ef-ink);
+  --btn-paginator-hover-color: var(--ef-signal);
+  --toc-highlight: var(--ef-ink);
+  --toc-popup-border-color: var(--ef-rule);
+  --btn-share-color: var(--ef-ink-2);
+  --btn-share-hover-color: var(--ef-ink);
+  --card-bg: var(--ef-panel);
+  --card-hover-bg: var(--ef-chip);
+  --card-shadow: none;
+  --footnote-target-bg: var(--ef-signal);
+  --tb-odd-bg: var(--ef-panel);
+  --tb-even-bg: var(--ef-panel);
+  --tb-border-color: var(--ef-rule);
+  --dash-color: var(--ef-rule);
+  --kbd-wrap-color: var(--ef-rule);
+  --kbd-text-color: var(--ef-ink);
+  --kbd-bg-color: var(--ef-chip);
+  --prompt-text-color: var(--ef-ink-2);
+  --prompt-tip-bg: var(--ef-panel);
+  --prompt-tip-icon-color: var(--ef-ink);
+  --prompt-info-bg: var(--ef-panel);
+  --prompt-info-icon-color: var(--ef-ink);
+  --prompt-warning-bg: var(--ef-panel);
+  --prompt-warning-icon-color: var(--ef-ink);
+  --prompt-danger-bg: var(--ef-panel);
+  --prompt-danger-icon-color: var(--ef-ink);
+  --tag-border: var(--ef-rule);
+  --tag-shadow: transparent;
+  --tag-hover: var(--ef-chip);
+  --search-tag-bg: var(--ef-chip);
+  --categories-border: var(--ef-rule);
+  --categories-hover-bg: var(--ef-chip);
+  --categories-icon-hover-color: var(--ef-ink);
+  --timeline-color: var(--ef-rule);
+  --timeline-node-bg: var(--ef-ink);
+  --timeline-year-dot-color: var(--ef-paper);
+  --language-border-color: var(--ef-rule);
+  --highlight-bg-color: var(--ef-panel);
+  --highlighter-rouge-color: var(--ef-ink);
+  --highlight-lineno-color: var(--ef-ink-2);
+  --inline-code-bg: var(--ef-chip);
+  --code-color: var(--ef-ink);
+  --code-header-text-color: var(--ef-ink-2);
+  --code-header-muted-color: var(--ef-rule);
+  --code-header-icon-color: var(--ef-ink-2);
+  --clipboard-checked-color: var(--ef-ink);
+  --filepath-text-color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'][data-bs-theme='dark'] {
+  --ef-paper: #191919;
+  --ef-panel: #222222;
+  --ef-ink: #ededed;
+  --ef-ink-2: #a3a3a3;
+  --ef-rule: #353535;
+  --ef-chip: #2e2e2e;
+  --ef-trace: var(--ef-signal);
+  --ef-tag-bg: #3a3a3a;
+  --ef-tag-fg: #ededed;
+  --ef-danger: #ff8a7a;
+  --ef-mark: rgb(255 250 0 / 22%);
+  --mask-bg: rgb(0 0 0 / 62%);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-ef='ef']:not([data-bs-theme]) {
+    --ef-paper: #191919;
+    --ef-panel: #222222;
+    --ef-ink: #ededed;
+    --ef-ink-2: #a3a3a3;
+    --ef-rule: #353535;
+    --ef-chip: #2e2e2e;
+    --ef-trace: var(--ef-signal);
+    --ef-tag-bg: #3a3a3a;
+    --ef-tag-fg: #ededed;
+    --ef-danger: #ff8a7a;
+    --ef-mark: rgb(255 250 0 / 22%);
+    --mask-bg: rgb(0 0 0 / 62%);
+  }
+}
+
+/* shared by both themes */
+html[data-ef='ef'] {
+  --ef-link-hover: #2dbaba;
+}
+
+/* ---------- 2. base ---------- */
+
+/* The EF look has no rounded corners and no soft shadows. Scoped, so ORI is
+   untouched. The "·" separator in the sidebar stays a dot. */
+html[data-ef='ef'] * {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+html[data-ef='ef'] .icon-border {
+  border-radius: 50% !important;
+}
+
+html[data-ef='ef'],
+html[data-ef='ef'] body {
+  background: var(--ef-paper);
+  color: var(--ef-ink);
+  font-family: var(--ef-font);
+  -webkit-font-smoothing: antialiased;
+}
+
+html[data-ef='ef'] ::selection {
+  background: var(--ef-signal);
+  color: var(--ef-on-signal);
+}
+
+html[data-ef='ef'] a {
+  color: var(--ef-ink);
+  text-decoration: none;
+}
+
+html[data-ef='ef'] a:hover {
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] :focus-visible {
+  outline: 2px solid var(--ef-ink);
+  outline-offset: 2px;
+}
+
+html[data-ef='ef'][data-bs-theme='dark'] :focus-visible {
+  outline-color: var(--ef-signal);
+}
+
+html[data-ef='ef'] hr {
+  border-top: 1px solid var(--ef-rule);
+  opacity: 1;
+}
+
+/* thin ink scrollbar */
+html[data-ef='ef'] * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ef-rule) transparent;
+}
+
+html[data-ef='ef'] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html[data-ef='ef'] ::-webkit-scrollbar-thumb {
+  background: var(--ef-rule);
+}
+
+/* field text: wide, tabular figures */
+html[data-ef='ef'] time,
+html[data-ef='ef'] .post-meta,
+html[data-ef='ef'] .pagination,
+html[data-ef='ef'] .ef-field {
+  font-stretch: var(--ef-wide);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 3. sidebar ---------- */
+
+/* markup that only exists for the EF style */
+.ef-only {
+  display: none !important;
+}
+
+html[data-ef='ef'] .ef-only {
+  display: block !important;
+}
+
+/* the original page title is replaced by the EF section header */
+html[data-ef='ef'] .ef-orig-title {
+  display: none;
+}
+
+html[data-ef='ef'] #sidebar {
+  background: var(--ef-paper);
+  border-right: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] #avatar img {
+  border: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .site-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-stretch: var(--ef-wider);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] .site-subtitle {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-stretch: var(--ef-wide);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .site-subtitle::before {
+  content: '// ';
+}
+
+/* the top hairline sits 1px above the first row (on the paper), so a selected
+   first row cannot paint over it */
+html[data-ef='ef'] #sidebar nav {
+  position: relative;
+}
+
+html[data-ef='ef'] #sidebar nav::before {
+  content: '';
+  position: absolute;
+  inset: -1px 0 auto 0;
+  height: 1px;
+  background: var(--ef-rule);
+}
+
+/* hairline between rows drawn as a background so row heights stay identical to ORI */
+html[data-ef='ef'] #sidebar .nav-item {
+  background-image: linear-gradient(var(--ef-rule), var(--ef-rule));
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+}
+
+/* ORI spaces the rows with a 4px top margin; EF turns that gap into padding so
+   rows touch, each row still starts on the same pixel and the selected block
+   fills the space between two dividers */
+html[data-ef='ef'] #sidebar .nav-item:not(:first-child) {
+  margin-top: 0;
+  padding-top: 0.25rem;
+}
+
+/* the selected row fills the whole row (so it lines up with the dividers) and
+   the hairline stays painted on top of the yellow */
+html[data-ef='ef'] #sidebar .nav-item.active {
+  background-color: var(--ef-signal);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
+}
+
+html[data-ef='ef'] #sidebar nav .nav-link {
+  color: var(--ef-ink-2);
+  transition:
+    background-color 0.16s var(--ef-mech),
+    color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #sidebar nav .nav-link i {
+  color: var(--ef-ink-2);
+}
+
+/* hover also fills the whole row (same box as the selected block) */
+html[data-ef='ef'] #sidebar .nav-item:not(.active):hover {
+  background-color: var(--ef-chip);
+}
+
+html[data-ef='ef'] #sidebar .nav-item:not(.active):hover .nav-link,
+html[data-ef='ef'] #sidebar .nav-item:not(.active):hover .nav-link i {
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #sidebar .nav-item.active .nav-link {
+  background: transparent;
+  color: var(--ef-on-signal);
+  font-weight: 700;
+}
+
+html[data-ef='ef'] #sidebar .nav-item.active .nav-link i {
+  color: var(--ef-on-signal);
+}
+
+html[data-ef='ef'] .sidebar-bottom > a,
+html[data-ef='ef'] #mode-toggle {
+  border: 1px solid var(--ef-rule);
+  background: var(--ef-panel);
+  color: var(--ef-ink-2);
+  transition:
+    background-color 0.16s var(--ef-mech),
+    color 0.16s var(--ef-mech),
+    border-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] .sidebar-bottom > a:hover,
+html[data-ef='ef'] #mode-toggle:hover {
+  background: var(--ef-chip);
+  color: var(--ef-ink);
+  border-color: var(--ef-ink);
+}
+
+html[data-ef='ef'] .dropdown-menu {
+  border: 1px solid var(--ef-rule);
+  background: var(--ef-panel);
+  padding: 0.25rem;
+}
+
+html[data-ef='ef'] .dropdown-item:hover {
+  background: var(--ef-chip);
+}
+
+/* ---------- 4. top bar ---------- */
+
+html[data-ef='ef'] #topbar-wrapper {
+  border-top: 3px solid;
+  border-image: linear-gradient(
+      90deg,
+      var(--ef-tri-a) 0 33.33%,
+      var(--ef-signal) 33.33% 66.66%,
+      var(--ef-tri-c) 66.66% 100%
+    )
+    1;
+  border-bottom: 1px solid var(--ef-rule);
+  backdrop-filter: none;
+}
+
+html[data-ef='ef'] #topbar {
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] #breadcrumb {
+  font-stretch: var(--ef-wide);
+  letter-spacing: 0.06em;
+}
+
+html[data-ef='ef'] #breadcrumb span:not(:last-child)::after {
+  content: '/';
+  padding: 0 0.45rem;
+  color: var(--ef-rule);
+}
+
+html[data-ef='ef'] #topbar-title {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+html[data-ef='ef'] #sidebar-trigger,
+html[data-ef='ef'] #search-trigger,
+html[data-ef='ef'] #search-cancel {
+  color: var(--ef-ink-2);
+  border: 1px solid transparent;
+  transition: color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #sidebar-trigger:hover,
+html[data-ef='ef'] #search-trigger:hover,
+html[data-ef='ef'] #search-cancel:hover {
+  color: var(--ef-ink);
+  border-color: var(--ef-rule);
+}
+
+html[data-ef='ef'] #search-input {
+  padding: 0.35rem 0.3rem;
+  background: transparent;
+  border: 0;
+  color: var(--ef-ink);
+  box-shadow: none;
+}
+
+/* one field, one border: the wrapper is the input frame */
+html[data-ef='ef'] search {
+  padding: 0 0.6rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  border-radius: 0;
+  transition: border-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] search:focus-within {
+  border-color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #search-input:focus {
+  outline: 0;
+}
+
+html[data-ef='ef'] #search-input::placeholder {
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] #search-result-wrapper {
+  background: var(--ef-paper);
+}
+
+html[data-ef='ef'] #search-results .post-preview {
+  border: 1px solid var(--ef-rule);
+  background: var(--ef-panel);
+}
+
+/* ---------- 5. home: the post list becomes record rows ---------- */
+
+html[data-ef='ef'] .ef-list-head {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .ef-list-head .ef-eyebrow {
+  margin-bottom: 0.5rem;
+  color: var(--ef-ink-2);
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-stretch: var(--ef-wider);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+html[data-ef='ef'] .ef-list-head-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+
+html[data-ef='ef'] .ef-list-title {
+  margin: 0;
+  color: var(--ef-ink);
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+html[data-ef='ef'] .ef-list-count {
+  margin: 0;
+  color: var(--ef-ink-2);
+  font-size: 0.82rem;
+  font-stretch: var(--ef-wide);
+  font-variant-numeric: tabular-nums;
+}
+
+html[data-ef='ef'] #post-list {
+  margin-top: 0;
+}
+
+html[data-ef='ef'] #post-list .card-wrapper {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--ef-rule);
+  background: none;
+}
+
+html[data-ef='ef'] #post-list .card {
+  border: 0;
+  background: none;
+}
+
+html[data-ef='ef'] #avatar img {
+  border: 0;
+}
+
+/* Chirpy paints each card with --card-bg and overlays a hover wash; EF rows sit
+   on the paper itself and use a yellow trace bar instead. */
+html[data-ef='ef'] .post-preview::before {
+  display: none;
+}
+
+html[data-ef='ef'] #post-list .post-preview {
+  position: relative;
+  display: block;
+  padding: 1.35rem 1rem 1.2rem 1.4rem;
+  background: transparent;
+  transition:
+    background-color 0.16s var(--ef-mech),
+    transform 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #post-list .post-preview::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--ef-signal);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #post-list .card-wrapper:hover .post-preview {
+  background: var(--ef-panel);
+  transform: translateX(6px);
+}
+
+html[data-ef='ef'] #post-list .card-wrapper:hover .post-preview::after {
+  transform: scaleY(1);
+}
+
+/* pressed / keyboard focus: the same row mark, held */
+html[data-ef='ef'] #post-list .post-preview:focus-visible::after {
+  transform: scaleY(1);
+}
+
+html[data-ef='ef'] #post-list .card-body {
+  padding: 0 !important;
+}
+
+html[data-ef='ef'] #post-list .card-title {
+  margin: 0 0 0.5rem;
+  color: var(--ef-ink) !important;
+  font-weight: 700;
+}
+
+html[data-ef='ef'] #post-list .card-text.content {
+  margin-bottom: 0.75rem !important;
+}
+
+html[data-ef='ef'] #post-list .card-text.content p {
+  color: var(--ef-ink-2) !important;
+  line-height: 1.5;
+}
+
+html[data-ef='ef'] #post-list .post-meta {
+  color: var(--ef-ink-2) !important;
+}
+
+html[data-ef='ef'] #post-list .post-meta i {
+  display: none;
+}
+
+html[data-ef='ef'] #post-list .post-meta .categories::before {
+  content: '│';
+  margin: 0 0.55rem;
+  color: var(--ef-rule);
+}
+
+html[data-ef='ef'] #post-list .pin {
+  padding: 0.05rem 0.45rem;
+  background: var(--ef-tag-bg);
+  color: var(--ef-tag-fg);
+}
+
+html[data-ef='ef'] #post-list .pin i {
+  display: none;
+}
+
+/* paginator */
+html[data-ef='ef'] .pagination {
+  justify-content: flex-start;
+  gap: 0.4rem;
+  margin-top: 2rem;
+}
+
+html[data-ef='ef'] .pagination .page-item:not(:last-child) {
+  margin-right: 0;
+}
+
+html[data-ef='ef'] .pagination .page-item .page-link {
+  padding: 0.3rem 0.75rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink);
+  transition:
+    background-color 0.16s var(--ef-mech),
+    border-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] .pagination .page-item:not(.active) .page-link:hover {
+  border-color: var(--ef-ink);
+}
+
+html[data-ef='ef'] .pagination .page-item.active .page-link {
+  background: var(--ef-signal);
+  border-color: var(--ef-signal);
+  color: var(--ef-on-signal);
+  font-weight: 700;
+}
+
+/* ---------- 6. post page ---------- */
+
+html[data-ef='ef'] article > header h1 {
+  margin-bottom: 0.75rem;
+  color: var(--ef-ink);
+  font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+html[data-ef='ef'] article > header h1::after {
+  content: '';
+  display: block;
+  height: 3px;
+  margin-top: 1.1rem;
+  background: linear-gradient(
+    90deg,
+    var(--ef-tri-a) 0 33.33%,
+    var(--ef-signal) 33.33% 66.66%,
+    var(--ef-tri-c) 66.66% 100%
+  );
+}
+
+html[data-ef='ef'] .post-desc {
+  color: var(--ef-ink-2);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+html[data-ef='ef'] header .post-meta {
+  margin-top: 1rem;
+  color: var(--ef-ink-2) !important;
+}
+
+html[data-ef='ef'] header .post-meta span + span::before {
+  content: '│';
+  padding: 0 0.5rem 0 0.2rem;
+  color: var(--ef-rule);
+}
+
+html[data-ef='ef'] header .post-meta em,
+html[data-ef='ef'] header .post-meta time {
+  color: var(--ef-ink);
+  font-style: normal;
+}
+
+html[data-ef='ef'] header .post-meta em a {
+  color: var(--ef-ink);
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] header .post-meta em a:hover {
+  border-bottom-color: var(--ef-ink);
+  background: var(--ef-mark);
+}
+
+/* reading column */
+html[data-ef='ef'] .content {
+  color: var(--ef-ink);
+  line-height: 1.85;
+}
+
+html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink) {
+  color: var(--ef-ink);
+  border-bottom: 1px solid var(--ef-rule);
+  transition:
+    background-color 0.16s var(--ef-mech),
+    border-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink):hover {
+  border-bottom-color: var(--ef-link-hover);
+}
+
+/* Chirpy paints every link hover terracotta (#d2603a, forced with !important);
+   EF uses the teal hover colour instead. The selectors mirror that rule. */
+html[data-ef='ef'] #page-category a:hover,
+html[data-ef='ef'] #page-tag a:hover,
+html[data-ef='ef'] #access-lastmod a:hover,
+html[data-ef='ef'] .post-tail-wrapper .license-wrapper > a:hover,
+html[data-ef='ef'] .post-edit > a:hover,
+html[data-ef='ef'] #search-results a:hover,
+html[data-ef='ef'] footer a:hover,
+html[data-ef='ef'] #topbar #breadcrumb a:hover,
+html[data-ef='ef'] .post-meta a:not([class]):hover,
+html[data-ef='ef'] .content a:not(.img-link):hover {
+  color: var(--ef-link-hover) !important;
+  border-bottom-color: var(--ef-link-hover);
+}
+
+html[data-ef='ef'] .content h2,
+html[data-ef='ef'] .content h3,
+html[data-ef='ef'] .content h4 {
+  color: var(--ef-ink);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+html[data-ef='ef'] .content h2 {
+  margin: 2.6rem 0 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--ef-rule);
+  font-size: 1.375rem;
+}
+
+html[data-ef='ef'] .content h2::before {
+  content: '//';
+  margin-right: 0.5em;
+  color: var(--ef-ink-2);
+  font-size: 0.78em;
+  font-weight: 600;
+  font-stretch: var(--ef-wider);
+  letter-spacing: 0.08em;
+}
+
+html[data-ef='ef'] .content h3 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.125rem;
+}
+
+html[data-ef='ef'] .content h4 {
+  margin: 1.6rem 0 0.6rem;
+  font-size: 0.98rem;
+}
+
+html[data-ef='ef'] .content p {
+  margin-bottom: 1.35em;
+}
+
+html[data-ef='ef'] .content strong {
+  color: var(--ef-ink);
+  font-weight: 700;
+}
+
+html[data-ef='ef'] .content blockquote {
+  margin: 1.6rem 0;
+  padding: 0.9rem 1.25rem;
+  background: var(--ef-panel);
+  border-left: 3px solid var(--ef-ink);
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+html[data-ef='ef'] .content ul,
+html[data-ef='ef'] .content ol {
+  margin-bottom: 1.35em;
+  padding-left: 1.4em;
+}
+
+html[data-ef='ef'] .content li {
+  margin-bottom: 0.35em;
+}
+
+html[data-ef='ef'] .content li::marker {
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .content img {
+  border: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .content figure,
+html[data-ef='ef'] .content figcaption {
+  color: var(--ef-ink-2);
+  font-size: 0.85rem;
+}
+
+html[data-ef='ef'] .content table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+html[data-ef='ef'] .content th,
+html[data-ef='ef'] .content td {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .content th {
+  background: var(--ef-chip);
+  color: var(--ef-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-stretch: var(--ef-wide);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[data-ef='ef'] .content tr:nth-child(even) td {
+  background: var(--ef-panel);
+}
+
+html[data-ef='ef'] .content kbd {
+  padding: 0.1rem 0.35rem;
+  background: var(--ef-chip);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink);
+  font-size: 0.8em;
+}
+
+/* code: one panel per snippet, a label strip, no inner boxes */
+html[data-ef='ef'] .content :not(pre):not(.highlight) > code {
+  padding: 0.12em 0.35em;
+  background: var(--ef-chip);
+  color: var(--ef-ink);
+  font-size: 0.88em;
+}
+
+html[data-ef='ef'] .content pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.15rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink);
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+html[data-ef='ef'] .content div[class^='language-'],
+html[data-ef='ef'] .content figure.highlight {
+  margin: 1.5rem 0;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  box-shadow: none;
+}
+
+html[data-ef='ef'] .content .code-header {
+  padding: 0.45rem 0.75rem;
+  background: var(--ef-chip);
+  border: 0;
+  border-bottom: 1px solid var(--ef-rule);
+  color: var(--ef-ink-2);
+  font-size: 0.72rem;
+  font-stretch: var(--ef-wide);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html[data-ef='ef'] .content .highlight {
+  padding: 0;
+  background: transparent !important;
+  overflow: auto;
+}
+
+html[data-ef='ef'] .content .highlight > code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  font-size: inherit;
+}
+
+html[data-ef='ef'] .content .highlight table {
+  margin: 0;
+  border: 0;
+}
+
+html[data-ef='ef'] .content .highlight td {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+html[data-ef='ef'] .content .highlight td:first-child {
+  display: table-cell;
+  margin: 0;
+}
+
+html[data-ef='ef'] .content .highlight td.rouge-gutter {
+  width: 1%;
+  margin: 0;
+  padding: 0.9rem 0.9rem 0.9rem 0 !important;
+  color: var(--ef-ink-2);
+  white-space: nowrap;
+  text-align: right;
+}
+
+html[data-ef='ef'] .content .highlight td.rouge-code {
+  padding: 0.9rem 1.1rem !important;
+}
+
+/* snippets without line numbers keep no empty gutter column */
+html[data-ef='ef'] .content div.language-plaintext td.rouge-gutter,
+html[data-ef='ef'] .content div.language-console td.rouge-gutter,
+html[data-ef='ef'] .content div.language-terminal td.rouge-gutter,
+html[data-ef='ef'] .content div.nolineno td.rouge-gutter {
+  display: none;
+}
+
+html[data-ef='ef'] .content .highlight pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+html[data-ef='ef'] .content .highlight .lineno {
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .content .highlight,
+html[data-ef='ef'] .content .highlight .w {
+  background-color: transparent;
+}
+
+/* prompts: paper panel, yellow flag, no red */
+html[data-ef='ef'] [class^='prompt-'] {
+  padding-left: 1.1rem;
+  background: var(--ef-panel) !important;
+  border-left: 3px solid var(--ef-signal);
+  color: var(--ef-ink-2);
+}
+
+/* toc */
+html[data-ef='ef'] #toc-wrapper {
+  border-left: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] #toc-wrapper .panel-heading {
+  padding-left: 0.9rem;
+}
+
+html[data-ef='ef'] #toc .toc-link {
+  color: var(--ef-ink-2);
+  transition: color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #toc .toc-link:hover {
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #toc .is-active-link {
+  color: var(--ef-ink);
+  font-weight: 700;
+}
+
+html[data-ef='ef'] #toc .is-active-link::before {
+  background-color: var(--ef-trace);
+}
+
+html[data-ef='ef'] #toc-solo-trigger {
+  padding: 0.35rem 0.7rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] #toc-solo-trigger:hover {
+  border-color: var(--ef-ink);
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #toc-bar {
+  background: var(--ef-paper);
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] #toc-popup {
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+}
+
+/* post tail */
+html[data-ef='ef'] .post-tail-wrapper {
+  margin-top: 4rem;
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .post-tail-wrapper .post-meta a {
+  color: var(--ef-ink);
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .post-tags .post-tag {
+  padding: 0.15rem 0.6rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .post-tags .post-tag:hover {
+  background: var(--ef-signal);
+  border-color: var(--ef-signal);
+  color: var(--ef-on-signal);
+}
+
+html[data-ef='ef'] .share-icons i {
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .share-icons > *:hover i {
+  color: var(--ef-ink);
+}
+
+/* related posts */
+html[data-ef='ef'] #related-posts .post-preview {
+  padding: 1rem 1.1rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  transition: border-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #related-posts .post-preview:hover {
+  border-color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #related-posts .card-title {
+  color: var(--ef-ink) !important;
+  font-weight: 700;
+}
+
+html[data-ef='ef'] #related-posts .post-meta {
+  color: var(--ef-ink-2) !important;
+}
+
+html[data-ef='ef'] #related-posts .post-meta i {
+  display: none;
+}
+
+/* prev / next */
+html[data-ef='ef'] .post-nav {
+  border-top: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .post-nav .btn {
+  border: 1px solid var(--ef-rule);
+  background: var(--ef-panel);
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .post-nav .btn:hover {
+  border-color: var(--ef-ink);
+  color: var(--ef-ink);
+}
+
+/* ---------- 7. panel ---------- */
+
+html[data-ef='ef'] #panel-wrapper {
+  border-left: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .panel-heading {
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ef-rule);
+  color: var(--ef-ink-2);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+html[data-ef='ef'] .panel-heading::before {
+  content: '// ';
+}
+
+html[data-ef='ef'] #panel-wrapper .content a {
+  color: var(--ef-ink-2);
+}
+
+/* recent-post titles in the panel read as labels, so they are bold by default */
+html[data-ef='ef'] #access-lastmod a {
+  font-weight: 700;
+}
+
+html[data-ef='ef'] #panel-wrapper .content a:hover {
+  color: var(--ef-ink);
+}
+
+/* panel tags read and behave like the other links: no fill, teal on hover */
+html[data-ef='ef'] #panel-wrapper .post-tag {
+  font-weight: 700;
+}
+
+html[data-ef='ef'] #panel-wrapper .post-tag:hover,
+html[data-ef='ef'] #panel-wrapper .post-tag:focus-visible,
+html[data-ef='ef'] #panel-wrapper .post-tag:active {
+  background-color: transparent;
+  border-color: var(--ef-rule) !important;
+  color: var(--ef-link-hover) !important;
+}
+
+/* ---------- 8. archives / categories / tags ---------- */
+
+html[data-ef='ef'] .dynamic-title {
+  margin-bottom: 1.75rem;
+  color: var(--ef-ink);
+  font-size: clamp(1.75rem, 3vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+html[data-ef='ef'] #archives {
+  letter-spacing: 0;
+}
+
+html[data-ef='ef'] #archives .year {
+  height: auto;
+  margin: 2.5rem 0 0.25rem;
+  color: var(--ef-ink);
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-stretch: var(--ef-wider);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+/* the theme draws a timeline with dots; EF uses hairlines instead */
+html[data-ef='ef'] #archives .year::before,
+html[data-ef='ef'] #archives .year::after,
+html[data-ef='ef'] #archives li::before,
+html[data-ef='ef'] #archives li::after,
+html[data-ef='ef'] #archives a::before {
+  content: none !important;
+  display: none !important;
+}
+
+html[data-ef='ef'] #archives ul {
+  margin-bottom: 0;
+  padding-left: 0 !important;
+}
+
+html[data-ef='ef'] #archives li {
+  overflow: visible;
+  background: none !important;
+  background-image: none !important;
+  border-bottom: 1px solid var(--ef-rule);
+  line-height: 2.75rem;
+}
+
+html[data-ef='ef'] #archives .date {
+  right: 0;
+  font-stretch: var(--ef-wide);
+  font-variant-numeric: tabular-nums;
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] #archives .date.day {
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #archives a {
+  margin-left: 1.25rem;
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #archives a:hover {
+  background: var(--ef-mark);
+}
+
+html[data-ef='ef'] #archives .post-meta {
+  color: var(--ef-ink-2) !important;
+}
+
+html[data-ef='ef'] .categories .card {
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] .categories .card-header {
+  background: var(--ef-chip);
+  border-bottom: 1px solid var(--ef-rule);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+html[data-ef='ef'] .categories .list-group-item {
+  background: var(--ef-panel);
+  border-color: var(--ef-rule);
+}
+
+html[data-ef='ef'] .categories .list-group-item:hover {
+  background: var(--ef-chip);
+}
+
+html[data-ef='ef'] #tags .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0.5rem 0.5rem 0;
+  padding: 0.3rem 0.7rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink-2);
+  font-weight: 700;
+  line-height: 1.3;
+  transition:
+    background-color 0.16s var(--ef-mech),
+    border-color 0.16s var(--ef-mech),
+    color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #tags .tag:hover {
+  background: var(--ef-signal);
+  border-color: var(--ef-signal);
+  color: var(--ef-on-signal);
+}
+
+html[data-ef='ef'] #tags .tag .text-muted {
+  color: inherit !important;
+  opacity: 0.7;
+  font-size: 0.9em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 8b. one tag / one category ---------- */
+
+html[data-ef='ef'] #page-tag h1,
+html[data-ef='ef'] #page-category h1 {
+  color: var(--ef-ink);
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+html[data-ef='ef'] #page-tag h1 i,
+html[data-ef='ef'] #page-category h1 i {
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] #page-tag h1 .lead,
+html[data-ef='ef'] #page-category h1 .lead {
+  font-stretch: var(--ef-wide);
+  font-variant-numeric: tabular-nums;
+}
+
+html[data-ef='ef'] #page-tag ul > li,
+html[data-ef='ef'] #page-category ul > li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] #page-tag ul > li::before,
+html[data-ef='ef'] #page-category ul > li::before {
+  content: none !important;
+  display: none !important;
+}
+
+html[data-ef='ef'] #page-tag ul > li > a,
+html[data-ef='ef'] #page-category ul > li > a {
+  color: var(--ef-ink);
+  font-weight: 600;
+}
+
+html[data-ef='ef'] #page-tag ul > li > a:hover,
+html[data-ef='ef'] #page-category ul > li > a:hover {
+  background: var(--ef-mark);
+}
+
+html[data-ef='ef'] .dash {
+  margin: 0 0.75rem 0.55rem;
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] #page-tag ul > li > time,
+html[data-ef='ef'] #page-tag ul > li > .text-nowrap,
+html[data-ef='ef'] #page-category ul > li > time,
+html[data-ef='ef'] #page-category ul > li > .text-nowrap {
+  font-stretch: var(--ef-wide);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 9. gallery ---------- */
+
+html[data-ef='ef'] .gallery-chip {
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink-2);
+  transition:
+    background-color 0.16s var(--ef-mech),
+    color 0.16s var(--ef-mech),
+    border-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] .gallery-chip:hover {
+  border-color: var(--ef-ink);
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] .gallery-chip.is-active {
+  background: var(--ef-signal);
+  border-color: var(--ef-signal);
+  color: var(--ef-on-signal);
+  font-weight: 700;
+}
+
+html[data-ef='ef'] .gallery-link {
+  background: var(--ef-panel);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+}
+
+html[data-ef='ef'] .gallery-link:hover img {
+  transform: none;
+  outline: 3px solid var(--ef-signal);
+  outline-offset: -3px;
+}
+
+html[data-ef='ef'] .gallery-year {
+  margin-top: 2rem;
+  color: var(--ef-ink);
+  font-size: 1.1rem;
+  font-weight: 800;
+  font-stretch: var(--ef-wider);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+html[data-ef='ef'] .gallery-card figcaption {
+  color: var(--ef-ink-2);
+}
+
+html[data-ef='ef'] .gallery-lb-btn {
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+  border: 1px solid rgb(255 255 255 / 28%);
+}
+
+html[data-ef='ef'] .gallery-lb-btn:hover {
+  background: rgb(255 255 255 / 24%);
+}
+
+
+/* ---------- 10. footer, back-to-top, toast ---------- */
+
+html[data-ef='ef'] footer[aria-label='Site Info'] {
+  margin-top: 3rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--ef-rule);
+  color: var(--ef-ink-2);
+  font-stretch: var(--ef-wide);
+  letter-spacing: 0.04em;
+}
+
+html[data-ef='ef'] footer[aria-label='Site Info'] a {
+  color: var(--ef-ink);
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+html[data-ef='ef'] footer[aria-label='Site Info'] a:hover {
+  border-bottom-color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #back-to-top {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+  transition: background-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #back-to-top:hover {
+  background: var(--ef-signal);
+  color: var(--ef-on-signal);
+}
+
+html[data-ef='ef'] .notification {
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  color: var(--ef-ink);
+}
+
+/* ---------- 11. EF toggle button ---------- */
+
+/* ORI look: same round button as the mode toggle, so the sidebar is unchanged. */
+#ef-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.8rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--sidebar-btn-bg);
+  box-shadow: var(--sidebar-border-color) 0 0 0 1px;
+  color: var(--sidebar-btn-color);
+  line-height: 1;
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease;
+}
+
+/* match the wider gap the theme uses between contact buttons on very wide screens */
+@media (min-width: 1650px) {
+  #ef-toggle {
+    margin-left: 1rem;
+  }
+}
+
+#ef-toggle:hover {
+  background-color: var(--sidebar-hover-bg);
+  color: var(--sidebar-active-color);
+}
+
+#ef-toggle .ef-switch-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* EF look: the ring sits *outside* the yellow (a 1px line that follows the cut
+   corner), the fill is drawn by ::before so the outline stays unbroken.
+   Daylight uses true black because the ink grey turns grey at this size. */
+html[data-ef='ef'] {
+  --ef-ring: #000;
+}
+
+html[data-ef='ef'][data-bs-theme='dark'] {
+  --ef-ring: var(--ef-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-ef='ef']:not([data-bs-theme]) {
+    --ef-ring: var(--ef-ink);
+  }
+}
+
+html[data-ef='ef'] #ef-toggle {
+  position: relative;
+  border: 0;
+  background: var(--ef-ring);
+  color: var(--ef-ink);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
+}
+
+html[data-ef='ef'] #ef-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: var(--ef-panel);
+  /* the fill must stay 1px inside the outer chamfer too, so its cut is deeper;
+     the diagonal band is ~1.5px wide to survive antialiasing */
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7.7px), calc(100% - 7.7px) 100%, 0 100%);
+  transition: background-color 0.16s var(--ef-mech);
+}
+
+html[data-ef='ef'] #ef-toggle:hover {
+  background: var(--ef-ring);
+}
+
+html[data-ef='ef'] #ef-toggle:hover::before {
+  background: var(--ef-chip);
+}
+
+html[data-ef='ef'] #ef-toggle[aria-pressed='true'],
+html[data-ef='ef'] #ef-toggle[aria-pressed='true']:hover {
+  background: var(--ef-ring);
+}
+
+html[data-ef='ef'] #ef-toggle[aria-pressed='true']::before,
+html[data-ef='ef'] #ef-toggle[aria-pressed='true']:hover::before {
+  background: var(--ef-signal);
+}
+
+html[data-ef='ef'] #ef-toggle .ef-switch-label {
+  position: relative;
+  z-index: 1;
+  color: var(--ef-ink);
+}
+
+html[data-ef='ef'] #ef-toggle[aria-pressed='true'] .ef-switch-label {
+  color: var(--ef-on-signal);
+}
+
+/* ---------- 12. motion preferences ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-ef='ef'] *,
+  html[data-ef='ef'] *::before,
+  html[data-ef='ef'] *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
