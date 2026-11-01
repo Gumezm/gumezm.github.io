@@ -316,8 +316,11 @@ html[data-ef='ef'] #sidebar .nav-item {
   background-size: 100% 1px;
 }
 
+/* the selected row fills the whole row (so it lines up with the dividers) and
+   the hairline stays painted on top of the yellow */
 html[data-ef='ef'] #sidebar .nav-item.active {
-  background-image: none;
+  background-color: var(--ef-signal);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
 }
 
 html[data-ef='ef'] #sidebar nav .nav-link {
@@ -331,16 +334,15 @@ html[data-ef='ef'] #sidebar nav .nav-link i {
   color: var(--ef-ink-2);
 }
 
-html[data-ef='ef'] #sidebar nav .nav-link:hover {
+html[data-ef='ef'] #sidebar .nav-item:not(.active) .nav-link:hover {
   background: var(--ef-chip);
   color: var(--ef-ink);
 }
 
 html[data-ef='ef'] #sidebar .nav-item.active .nav-link {
-  background: var(--ef-signal);
+  background: transparent;
   color: var(--ef-on-signal);
   font-weight: 700;
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%);
 }
 
 html[data-ef='ef'] #sidebar .nav-item.active .nav-link i {
