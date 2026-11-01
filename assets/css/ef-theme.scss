@@ -1439,12 +1439,27 @@ html[data-ef='ef'] .notification {
   letter-spacing: 0.06em;
 }
 
-/* EF look: the ink sits *outside* the yellow (a 1px ring that follows the cut
-   corner), the fill is drawn by ::before so the ring stays unbroken. */
+/* EF look: the ring sits *outside* the yellow (a 1px line that follows the cut
+   corner), the fill is drawn by ::before so the outline stays unbroken.
+   Daylight uses true black because the ink grey turns grey at this size. */
+html[data-ef='ef'] {
+  --ef-ring: #000;
+}
+
+html[data-ef='ef'][data-bs-theme='dark'] {
+  --ef-ring: var(--ef-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-ef='ef']:not([data-bs-theme]) {
+    --ef-ring: var(--ef-ink);
+  }
+}
+
 html[data-ef='ef'] #ef-toggle {
   position: relative;
   border: 0;
-  background: var(--ef-ink);
+  background: var(--ef-ring);
   color: var(--ef-ink);
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%);
 }
@@ -1459,7 +1474,7 @@ html[data-ef='ef'] #ef-toggle::before {
 }
 
 html[data-ef='ef'] #ef-toggle:hover {
-  background: var(--ef-ink);
+  background: var(--ef-ring);
 }
 
 html[data-ef='ef'] #ef-toggle:hover::before {
@@ -1468,7 +1483,7 @@ html[data-ef='ef'] #ef-toggle:hover::before {
 
 html[data-ef='ef'] #ef-toggle[aria-pressed='true'],
 html[data-ef='ef'] #ef-toggle[aria-pressed='true']:hover {
-  background: var(--ef-ink);
+  background: var(--ef-ring);
 }
 
 html[data-ef='ef'] #ef-toggle[aria-pressed='true']::before,
