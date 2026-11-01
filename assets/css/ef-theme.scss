@@ -262,6 +262,11 @@ html[data-ef='ef'] .ef-only {
   display: block !important;
 }
 
+/* the original page title is replaced by the EF section header */
+html[data-ef='ef'] .ef-orig-title {
+  display: none;
+}
+
 html[data-ef='ef'] #sidebar {
   background: var(--ef-paper);
   border-right: 1px solid var(--ef-rule);

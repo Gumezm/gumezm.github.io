@@ -1,0 +1,8 @@
+{%- assign ef_slug = page.url | split: '/' | join: '' -%}
+<!-- EF style only: the section header used by the home list and the tab pages -->
+<header class="ef-only ef-list-head">
+  <p class="ef-eyebrow">// {{ ef_slug | upcase }}</p>
+  <div class="ef-list-head-main">
+    <h1 class="ef-list-title">{{ include.title }}</h1>
+  </div>
+</header>
