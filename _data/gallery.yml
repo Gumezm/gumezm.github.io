@@ -1,4 +1,5 @@
 # 相册数据。可由 tools/process-gallery.py 自动生成，手写的 tags 在重跑时会保留。
+# 分组（// 年份）与排序以文件名里的 YYYY-MM-DD 为准；文件名没有日期时回退到 taken。
 - src: /assets/img/gallery/2026-10-31-Medic-Cat.webp
   thumb: /assets/img/gallery/2026-10-31-Medic-Cat.thumb.webp
   width: 832

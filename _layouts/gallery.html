@@ -5,7 +5,7 @@ tail_includes: ['gallery-lightbox']
 
 {% include lang.html %}
 
-{% assign photos = site.data.gallery | sort: 'taken' | reverse %}
+{% assign photos = site.data.gallery %}
 {% assign tag_names = '' | split: '' %}
 
 {% for photo in photos %}
@@ -38,11 +38,11 @@ tail_includes: ['gallery-lightbox']
 
       {% assign last_year = '' %}
       {% for photo in photos %}
-        {% assign year = photo.taken | slice: 0, 4 %}
+        {% assign year = photo.date | slice: 0, 4 %}
         {% if year != last_year %}
           {% unless forloop.first %}</div></section>{% endunless %}
           <section class="gallery-year-group">
-            <h2 class="gallery-year">{{ year }}</h2>
+            {% if year != '' %}<h2 class="gallery-year">{{ year }}</h2>{% endif %}
             <div class="gallery-grid">
           {% assign last_year = year %}
         {% endif %}
