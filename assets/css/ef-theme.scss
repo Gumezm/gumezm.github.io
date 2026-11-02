@@ -660,6 +660,16 @@ html[data-ef='ef'] .pagination .page-item.active .page-link {
 
 /* ---------- 6. post page ---------- */
 
+/* the post file name, uppercased, as the section eyebrow */
+html[data-ef='ef'] article > header .ef-post-eyebrow {
+  margin-bottom: 0.5rem;
+  color: var(--ef-ink-2);
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-stretch: var(--ef-wider);
+  letter-spacing: 0.14em;
+}
+
 html[data-ef='ef'] article > header h1 {
   margin-bottom: 0.75rem;
   color: var(--ef-ink);
