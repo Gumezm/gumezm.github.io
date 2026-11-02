@@ -813,6 +813,24 @@ html[data-ef='ef'] .content blockquote {
   color: var(--ef-ink-2);
 }
 
+/* Chirpy's prompt blocks (`.prompt-tip` etc.) live inside a 3rem icon gutter and
+   carry their own background; the generic rule above would collapse both, so the
+   prompt geometry is restored here (flat EF panel, square corners, no heavy bar). */
+html[data-ef='ef'] .content blockquote[class^='prompt-'] {
+  padding: 0.9rem 1.25rem 0.9rem 3rem;
+  background: var(--ef-panel);
+  border: 1px solid var(--ef-rule);
+  border-left: 3px solid var(--ef-ink-2);
+  border-radius: 0;
+}
+
+html[data-ef='ef'] .content blockquote[class^='prompt-']::before {
+  left: 0.75rem;
+  width: 1.75rem;
+  margin-top: 0.1rem;
+  font-size: 0.95rem;
+}
+
 html[data-ef='ef'] .content blockquote p:last-child {
   margin-bottom: 0;
 }
