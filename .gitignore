@@ -48,3 +48,6 @@ ehthumbs.db
 desktop.ini
 .Spotlight-V100
 .Trashes
+
+# ZCode workspace files (local tooling, not part of the site)
+.zcode/
