@@ -1581,7 +1581,10 @@ html[data-ef='ef'] .not-found-sep {
   html[data-ef='ef'] *,
   html[data-ef='ef'] *::before,
   html[data-ef='ef'] *::after {
-    transition: none !important;
-    animation: none !important;
+    /* shortening instead of `animation: none` keeps animationend firing, which
+       GLightbox (and other JS) waits for before cleaning up */
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
