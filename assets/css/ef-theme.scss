@@ -717,12 +717,14 @@ html[data-ef='ef'] header .post-meta time {
 
 html[data-ef='ef'] header .post-meta em a {
   color: var(--ef-ink);
+  font-weight: 700;
+  background: transparent;
   border-bottom: 1px solid var(--ef-rule);
 }
 
 html[data-ef='ef'] header .post-meta em a:hover {
+  background: transparent;
   border-bottom-color: var(--ef-ink);
-  background: var(--ef-mark);
 }
 
 /* reading column */
