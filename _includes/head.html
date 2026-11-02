@@ -147,6 +147,12 @@
     src="{{ '/assets/js/ef-theme.js' | relative_url }}?v={{ site.time | date: '%s' }}"
   ></script>
 
+  <!-- Light / Dark switch: flips directly on click, no menu -->
+  <script
+    defer
+    src="{{ '/assets/js/mode-toggle.js' | relative_url }}?v={{ site.time | date: '%s' }}"
+  ></script>
+
   {% include js-selector.html lang=lang %}
 
   {% if jekyll.environment == 'production' %}

@@ -54,39 +54,39 @@
         <i class="fa-regular fa-moon" data-theme-mode="dark"></i>
       {%- endcapture -%}
 
-      <div class="btn-group dropup">
-        <button
-          type="button"
-          class="btn btn-link nav-link"
-          aria-label="Switch Mode"
-          id="mode-toggle"
-          data-bs-toggle="dropdown"
-        >
-          {{- icon_light -}}
-          {{- icon_dark -}}
-          {{- icon_system -}}
-        </button>
-        <ul class="dropdown-menu rounded-3 mb-1 p-1">
-          <li>
-            <button class="dropdown-item d-flex align-items-center" type="button" data-theme-mode="light">
-              {{- icon_light -}}
-              {{- site.data.locales[lang].theme.light -}}
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item d-flex align-items-center" type="button" data-theme-mode="dark">
-              {{- icon_dark -}}
-              {{- site.data.locales[lang].theme.dark -}}
-            </button>
-          </li>
-          <li>
-            <button class="dropdown-item d-flex align-items-center" type="button" data-theme-mode="system">
-              {{- icon_system -}}
-              {{- site.data.locales[lang].theme.system -}}
-            </button>
-          </li>
-        </ul>
-      </div>
+      <button
+        type="button"
+        class="btn btn-link nav-link"
+        aria-label="切换到深色模式"
+        title="切换到深色模式"
+        id="mode-toggle"
+      >
+        {{- icon_light -}}
+        {{- icon_dark -}}
+        {{- icon_system -}}
+      </button>
+      <!-- Kept hidden: the theme JS binds to `#mode-toggle + .dropdown-menu`,
+           so removing it breaks the rest of commons.min.js. -->
+      <ul class="dropdown-menu rounded-3 mb-1 p-1 d-none">
+        <li>
+          <button class="dropdown-item d-flex align-items-center" type="button" data-theme-mode="light">
+            {{- icon_light -}}
+            {{- site.data.locales[lang].theme.light -}}
+          </button>
+        </li>
+        <li>
+          <button class="dropdown-item d-flex align-items-center" type="button" data-theme-mode="dark">
+            {{- icon_dark -}}
+            {{- site.data.locales[lang].theme.dark -}}
+          </button>
+        </li>
+        <li>
+          <button class="dropdown-item d-flex align-items-center" type="button" data-theme-mode="system">
+            {{- icon_system -}}
+            {{- site.data.locales[lang].theme.system -}}
+          </button>
+        </li>
+      </ul>
 
       <!-- ORI / EF style switch, right of the mode toggle -->
       <button
