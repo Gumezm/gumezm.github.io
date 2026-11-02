@@ -15,7 +15,7 @@ tail_includes: ['gallery-lightbox']
 {% endfor %}
 
 {% assign ef_gallery_title = site.data.locales[lang].tabs.gallery %}
-{% include ef-page-head.html title=ef_gallery_title %}
+{% include ef-page-head.html title=ef_gallery_title inset=true %}
 
 <article class="px-1 gallery-page">
   <h1 class="dynamic-title ef-orig-title">{{ site.data.locales[lang].tabs.gallery }}</h1>

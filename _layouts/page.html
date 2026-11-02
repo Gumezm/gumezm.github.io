@@ -12,9 +12,9 @@ layout: default
 {% if page.collection == 'tabs' %}
   {% assign head_key = page.title | downcase %}
   {% assign head_title = site.data.locales[lang].tabs[head_key] | default: page.title %}
-  {% include ef-page-head.html title=head_title %}
+  {% include ef-page-head.html title=head_title inset=true %}
 {% elsif page.url == '/404.html' %}
-  {% include ef-page-head.html title='Page Not Found' eyebrow='404' %}
+  {% include ef-page-head.html title='Page Not Found' eyebrow='404' inset=true %}
 {% endif %}
 
 <article class="px-1">

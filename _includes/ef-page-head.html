@@ -1,6 +1,8 @@
 {%- assign ef_slug = page.url | split: '/' | join: '' -%}
-<!-- EF style only: the section header used by the home list and the tab pages -->
-<header class="ef-only ef-list-head">
+<!-- EF style only: the section header used by the home list and the tab pages.
+     `inset` adds the same 0.25rem side padding as `article.px-1`, so headers
+     rendered outside an article line up with the page content below. -->
+<header class="ef-only ef-list-head{% if include.inset %} px-1{% endif %}">
   <p class="ef-eyebrow">// {{ include.eyebrow | default: ef_slug | upcase }}</p>
   <div class="ef-list-head-main">
     <h1 class="ef-list-title">{{ include.title }}</h1>
