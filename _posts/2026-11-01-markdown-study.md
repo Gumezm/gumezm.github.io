@@ -104,7 +104,7 @@ math: true
 
 ##### 6. 代码
 
-```
+```GDScript
 extend Node2D
 
 func _ready() -> void:
