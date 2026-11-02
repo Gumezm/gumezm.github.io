@@ -10,7 +10,12 @@ For every input image the script:
   * writes a display copy (long edge <= 2000px) and a 640px thumbnail as WebP
   * appends an entry to _data/gallery.yml
 
-Existing entries are never rewritten; hand-written captions and tags stay intact.
+Files are named `<YYYY-MM-DD>-<name>.webp`, the name taken from the source file
+(`Medic Cat.jpg` -> `2026-10-31-Medic-Cat.webp`; spaces and underscores become
+`-`). The gallery page shows only the name, with the hyphens turned back into
+spaces.
+
+Existing entries are never rewritten; hand-written tags stay intact.
 """
 
 from __future__ import annotations
@@ -58,15 +63,25 @@ def taken_at(image: Image.Image, source: Path) -> dt.datetime:
     return dt.datetime.fromtimestamp(source.stat().st_mtime)
 
 
-def next_index(date_prefix: str) -> int:
-    pattern = re.compile(rf"{re.escape(date_prefix)}-(\d+)(?:\.thumb)?\.webp$")
-    used = [0]
-    if OUT_DIR.exists():
-        for item in OUT_DIR.iterdir():
-            match = pattern.match(item.name)
-            if match:
-                used.append(int(match.group(1)))
-    return max(used) + 1
+def photo_name(source: Path) -> str:
+    """Turn a source file name into the hyphenated slug used in the published name."""
+    slug = re.sub(r"[\s_]+", "-", source.stem.strip())
+    slug = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff-]", "", slug)
+    slug = re.sub(r"-{2,}", "-", slug).strip("-")
+    return slug or "photo"
+
+
+def unique_stem(date_prefix: str, name: str) -> str:
+    """`<date>-<name>`, with `-2`, `-3`, ... appended when that name is taken."""
+    stem = f"{date_prefix}-{name}"
+    if not OUT_DIR.exists():
+        return stem
+    taken = {item.name for item in OUT_DIR.iterdir()}
+    candidate, counter = stem, 1
+    while f"{candidate}.webp" in taken or f"{candidate}.thumb.webp" in taken:
+        counter += 1
+        candidate = f"{stem}-{counter}"
+    return candidate
 
 
 def fit_long_edge(image: Image.Image, edge: int) -> Image.Image:
@@ -92,7 +107,6 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Process photos into the gallery.")
     parser.add_argument("paths", nargs="+", help="image files or directories")
     parser.add_argument("--tags", default="", help="comma separated tags")
-    parser.add_argument("--caption", default="", help="caption applied to every processed image")
     args = parser.parse_args()
 
     files = collect(args.paths)
@@ -116,8 +130,8 @@ def main() -> int:
             continue
 
         date_prefix = taken.strftime("%Y-%m-%d")
-        index = next_index(date_prefix)
-        stem = f"{date_prefix}-{index:02d}"
+        name = photo_name(source)
+        stem = unique_stem(date_prefix, name)
         full_path = OUT_DIR / f"{stem}.webp"
         thumb_path = OUT_DIR / f"{stem}.thumb.webp"
 
@@ -132,7 +146,7 @@ def main() -> int:
             "width": full.width,
             "height": full.height,
             "taken": taken.strftime("%Y-%m-%d %H:%M"),
-            "caption": args.caption,
+            "name": stem[len(date_prefix) + 1 :].replace("-", " "),
             "tags": tags,
         }
         with DATA_FILE.open("a", encoding="utf-8") as handle:

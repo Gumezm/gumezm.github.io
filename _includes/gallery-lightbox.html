@@ -5,7 +5,6 @@
   <figure class="gallery-lb-stage">
     <img id="gallery-lb-img" alt="" decoding="async" data-proofer-ignore>
     <figcaption>
-      <span id="gallery-lb-meta"></span>
       <span id="gallery-lb-caption"></span>
     </figcaption>
   </figure>
@@ -22,7 +21,6 @@
     const groups = Array.from(document.querySelectorAll('.gallery-year-group'));
     const lightbox = document.getElementById('gallery-lightbox');
     const lbImg = document.getElementById('gallery-lb-img');
-    const lbMeta = document.getElementById('gallery-lb-meta');
     const lbCaption = document.getElementById('gallery-lb-caption');
     const lbPrev = lightbox.querySelector('.gallery-lb-prev');
     const lbNext = lightbox.querySelector('.gallery-lb-next');
@@ -91,9 +89,8 @@
         lbImg.classList.add('gallery-lb-fade');
       };
       lbImg.src = link.dataset.full;
-      lbImg.alt = link.dataset.caption || '照片';
-      lbMeta.textContent = [link.dataset.taken, link.dataset.tags].filter(Boolean).join(' · ');
-      lbCaption.textContent = link.dataset.caption || '';
+      lbImg.alt = link.dataset.name || '照片';
+      lbCaption.textContent = link.dataset.name || '';
       lbPrev.hidden = lbNext.hidden = visibleLinks.length < 2;
 
       const next = visibleLinks[(currentIndex + 1) % visibleLinks.length];

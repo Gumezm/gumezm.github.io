@@ -129,10 +129,6 @@
   white-space: nowrap;
 }
 
-.gallery-card figcaption time {
-  flex: none;
-}
-
 .gallery-caption {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -208,11 +204,6 @@
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.85);
   text-align: center;
-}
-
-#gallery-lb-meta {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
 }
 
 .gallery-lb-btn {

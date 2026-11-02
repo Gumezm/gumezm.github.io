@@ -52,22 +52,18 @@ tail_includes: ['gallery-lightbox']
             class="gallery-link"
             href="{{ photo.src | relative_url }}"
             data-full="{{ photo.src | relative_url }}"
-            data-caption="{{ photo.caption | escape }}"
-            data-taken="{{ photo.taken | escape }}"
+            data-name="{{ photo.name | escape }}"
             data-tags="{{ photo.tags | join: '、' | escape }}"
           >
             <img
               src="{{ photo.thumb | relative_url }}"
-              alt="{{ photo.caption | default: '照片' | escape }}"
+              alt="{{ photo.name | default: '照片' | escape }}"
               loading="lazy"
               decoding="async"
             >
           </a>
           <figcaption>
-            <time datetime="{{ photo.taken | date: '%Y-%m-%dT%H:%M' }}">{{ photo.taken | date: '%Y-%m-%d' }}</time>
-            {% if photo.caption and photo.caption != '' %}
-              <span class="gallery-caption">{{ photo.caption }}</span>
-            {% endif %}
+            <span class="gallery-caption">{{ photo.name }}</span>
           </figcaption>
         </figure>
 
