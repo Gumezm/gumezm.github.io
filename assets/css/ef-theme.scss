@@ -1272,23 +1272,10 @@ html[data-ef='ef'] #tags .tag .text-muted {
 
 /* ---------- 8b. one tag / one category ---------- */
 
-html[data-ef='ef'] #page-tag h1,
-html[data-ef='ef'] #page-category h1 {
-  color: var(--ef-ink);
-  font-size: 1.9rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-html[data-ef='ef'] #page-tag h1 i,
-html[data-ef='ef'] #page-category h1 i {
-  color: var(--ef-ink-2);
-}
-
-html[data-ef='ef'] #page-tag h1 .lead,
-html[data-ef='ef'] #page-category h1 .lead {
-  font-stretch: var(--ef-wide);
-  font-variant-numeric: tabular-nums;
+/* the original h1 is replaced by the EF section header */
+html[data-ef='ef'] #page-tag .ef-list-head,
+html[data-ef='ef'] #page-category .ef-list-head {
+  margin-bottom: 0.5rem;
 }
 
 html[data-ef='ef'] #page-tag ul > li,
