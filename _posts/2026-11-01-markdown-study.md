@@ -123,11 +123,11 @@ func _ready() -> void:
 - **图床**(不推荐)
 - **格式**:`[![图片说明](图片URL)](跳转URL)`
 
-![Medic](https://gumezm.github.io/assets/img/gallery/2026-10-31-01.webp)
+![Medic](https://gumezm.github.io/assets/img/gallery/2026-10-31-Medic-Cat.webp)
 
 - 使用**HTML**来调整图片大小和位置
 
-<img src="https://gumezm.github.io/assets/img/gallery/2026-10-31-01.webp" width="50" alt="2026-10-31-01">
+<img src="https://gumezm.github.io/assets/img/gallery/2026-10-31-Medic-Cat.webp" width="50" alt="Medic Cat">
 
 ## 三、其他操作
 
