@@ -1,7 +1,7 @@
 # Bundler cache
 .bundle
 vendor
-Gemfile.lock
+# Gemfile.lock 入库以锁定依赖版本，CI 构建可复现
 
 # Jekyll cache
 .jekyll-cache
@@ -23,12 +23,26 @@ __pycache__/
 # Logs
 *.log
 
-# IDE configurations
+# 编辑器与合并残留
+*.bak
+*.orig
+*.rej
+*.swp
+*.swo
+
+# Python 虚拟环境（tools/process-gallery.py 依赖 Pillow）
+.venv/
+venv/
+
+# IDE configurations（本地编辑器配置不入库）
 .idea
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
-!.vscode/tasks.json
+.vscode/
+
+# 本地开发容器配置，不属于站点内容
+.devcontainer/
+
+# 开发计划看板：本地维护，不入库也不发布（站点侧由 _config.yml 的 exclude 进一步排除）
+plan.md
 
 # Misc
 _sass/vendors
