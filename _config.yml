@@ -222,6 +222,7 @@ exclude:
   - docs
   - tools
   - plan.md
+  - AGENTS.md
   - README.md
   - LICENSE
   - purgecss.js
