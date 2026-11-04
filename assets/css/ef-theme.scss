@@ -268,11 +268,7 @@ html[data-ef='ef'] #sidebar {
   border-right: 1px solid var(--ef-rule);
 }
 
-html[data-ef='ef'] #avatar img {
-  border: 1px solid var(--ef-rule);
-}
-
-/* EF 模式只显示方形头像（avatar.png），隐藏 ORI 的原头像；圆角 10px */
+/* EF 模式只显示方形头像（site.avatar_ef），隐藏 ORI 的原头像；圆角 10px、无边框 */
 html[data-ef='ef'] #avatar > img:not(.ef-only) {
   display: none;
 }
@@ -280,6 +276,10 @@ html[data-ef='ef'] #avatar > img:not(.ef-only) {
 html[data-ef='ef'] #avatar,
 html[data-ef='ef'] #avatar img {
   border-radius: 10px !important;
+}
+
+html[data-ef='ef'] #avatar img {
+  border: 0;
 }
 
 html[data-ef='ef'] .site-title {
@@ -542,10 +542,6 @@ html[data-ef='ef'] #post-list .card-wrapper {
 html[data-ef='ef'] #post-list .card {
   border: 0;
   background: none;
-}
-
-html[data-ef='ef'] #avatar img {
-  border: 0;
 }
 
 /* Chirpy paints each card with --card-bg and overlays a hover wash; EF rows sit

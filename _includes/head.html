@@ -1,4 +1,9 @@
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="theme-color" id="theme-color-light" media="(prefers-color-scheme: light)" content="#f7f7f7">
+  <meta name="theme-color" id="theme-color-dark" media="(prefers-color-scheme: dark)" content="#1b1b1e">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
+
   <!-- EF theme: apply the saved style before the first paint -->
   <script>
     (function () {
@@ -6,17 +11,16 @@
         if (localStorage.getItem('ef-theme') === 'ef') {
           document.documentElement.setAttribute('data-ef', 'ef');
         }
+        if (document.documentElement.getAttribute('data-ef') === 'ef') {
+          // 浏览器外框跟随 EF 纸色，与 --ef-paper 保持一致
+          var light = document.getElementById('theme-color-light');
+          var dark = document.getElementById('theme-color-dark');
+          if (light) light.setAttribute('content', '#f4f4f2');
+          if (dark) dark.setAttribute('content', '#191919');
+        }
       } catch (e) {}
     })();
   </script>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f7f7">
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1b1b1e">
-  <meta
-    name="viewport"
-    content="width=device-width, user-scalable=no initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
-  >
 
   {%- capture seo_tags -%}
     {% seo title=false %}
