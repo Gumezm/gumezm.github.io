@@ -735,7 +735,7 @@ html[data-ef='ef'] .content {
   line-height: 1.85;
 }
 
-html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink) {
+html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink):not(.img-link) {
   color: var(--ef-ink);
   border-bottom: 1px solid var(--ef-rule);
   transition:
@@ -743,7 +743,7 @@ html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink) {
     border-color 0.16s var(--ef-mech);
 }
 
-html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink):hover {
+html[data-ef='ef'] .content a:not(.post-tag):not(.btn):not(.headerlink):not(.img-link):hover {
   border-bottom-color: var(--ef-link-hover);
 }
 
