@@ -12,7 +12,9 @@
           document.documentElement.setAttribute('data-ef', 'ef');
         }
         if (document.documentElement.getAttribute('data-ef') === 'ef') {
-          // 浏览器外框跟随 EF 纸色，与 --ef-paper 保持一致
+          /* 浏览器外框跟随 EF 纸色，与 --ef-paper 保持一致。
+             必须用块注释：生产构建的 compress_html 会把换行压掉，
+             行注释会注释掉后面的整段脚本。 */
           var light = document.getElementById('theme-color-light');
           var dark = document.getElementById('theme-color-dark');
           if (light) light.setAttribute('content', '#f4f4f2');
