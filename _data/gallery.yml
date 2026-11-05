@@ -1,10 +1,12 @@
 # 相册数据。可由 tools/process-gallery.py 自动生成，手写的 tags 在重跑时会保留。
 # 分组（// 年份）与排序以文件名里的 YYYY-MM-DD 为准；文件名没有日期时回退到 taken。
-- src: /assets/img/gallery/2026-10-31-Medic-Cat.webp
-  thumb: /assets/img/gallery/2026-10-31-Medic-Cat.thumb.webp
+# 文件名格式：`<YYYY-MM-DD>-<图片名>--<介绍>.webp`，介绍可省略；灯箱在名称下方展示 desc。
+- src: /assets/img/gallery/2026-10-31-Medic--Medic猫猫.webp
+  thumb: /assets/img/gallery/2026-10-31-Medic--Medic猫猫.thumb.webp
   width: 832
   height: 1216
   taken: 2026-10-31 16:31
-  name: Medic Cat
+  name: Medic
+  desc: Medic猫猫
   tags:
     - AI

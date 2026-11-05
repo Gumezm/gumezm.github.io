@@ -15,6 +15,11 @@ Files are named `<YYYY-MM-DD>-<name>.webp`, the name taken from the source file
 `-`). The gallery page shows only the name, with the hyphens turned back into
 spaces.
 
+An optional description can be appended with a double hyphen:
+`Medic--Medic猫猫.jpg` -> `2026-10-31-Medic--Medic猫猫.webp`, name `Medic`,
+description `Medic猫猫`. The description is shown under the name in the lightbox.
+A single hyphen is never a separator, so photo names may contain `-` freely.
+
 Existing entries are never rewritten; hand-written tags stay intact.
 """
 
@@ -63,17 +68,25 @@ def taken_at(image: Image.Image, source: Path) -> dt.datetime:
     return dt.datetime.fromtimestamp(source.stat().st_mtime)
 
 
-def photo_name(source: Path) -> str:
-    """Turn a source file name into the hyphenated slug used in the published name."""
-    slug = re.sub(r"[\s_]+", "-", source.stem.strip())
+def slugify(text: str) -> str:
+    """Lower-noise slug: spaces and underscores become `-`, other punctuation goes."""
+    slug = re.sub(r"[\s_]+", "-", text.strip())
     slug = re.sub(r"[^0-9A-Za-z\u4e00-\u9fff-]", "", slug)
     slug = re.sub(r"-{2,}", "-", slug).strip("-")
-    return slug or "photo"
+    return slug
 
 
-def unique_stem(date_prefix: str, name: str) -> str:
-    """`<date>-<name>`, with `-2`, `-3`, ... appended when that name is taken."""
-    stem = f"{date_prefix}-{name}"
+def photo_parts(source: Path) -> tuple[str, str]:
+    """Split a source stem into (name, description); `--` separates the description."""
+    head, sep, tail = source.stem.partition("--")
+    name = slugify(head) or "photo"
+    desc = slugify(tail) if sep else ""
+    return name, desc
+
+
+def unique_stem(date_prefix: str, name: str, desc: str = "") -> str:
+    """`<date>-<name>[--<desc>]`, with `-2`, `-3`, ... appended when that name is taken."""
+    stem = f"{date_prefix}-{name}" + (f"--{desc}" if desc else "")
     if not OUT_DIR.exists():
         return stem
     taken = {item.name for item in OUT_DIR.iterdir()}
@@ -130,8 +143,8 @@ def main() -> int:
             continue
 
         date_prefix = taken.strftime("%Y-%m-%d")
-        name = photo_name(source)
-        stem = unique_stem(date_prefix, name)
+        name, desc = photo_parts(source)
+        stem = unique_stem(date_prefix, name, desc)
         full_path = OUT_DIR / f"{stem}.webp"
         thumb_path = OUT_DIR / f"{stem}.thumb.webp"
 
@@ -146,7 +159,8 @@ def main() -> int:
             "width": full.width,
             "height": full.height,
             "taken": taken.strftime("%Y-%m-%d %H:%M"),
-            "name": stem[len(date_prefix) + 1 :].replace("-", " "),
+            "name": name.replace("-", " "),
+            "desc": desc.replace("-", " "),
             "tags": tags,
         }
         with DATA_FILE.open("a", encoding="utf-8") as handle:

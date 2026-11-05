@@ -53,6 +53,7 @@ tail_includes: ['gallery-lightbox']
             href="{{ photo.src | relative_url }}"
             data-full="{{ photo.src | relative_url }}"
             data-name="{{ photo.name | escape }}"
+            data-desc="{{ photo.desc | escape }}"
             data-tags="{{ photo.tags | join: '、' | escape }}"
           >
             <img

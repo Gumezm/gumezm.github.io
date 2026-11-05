@@ -206,6 +206,13 @@
   text-align: center;
 }
 
+/* 名称下方的介绍行：弱一档，保持在同一条中轴上 */
+#gallery-lb-desc {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.62);
+}
+
 .gallery-lb-btn {
   position: absolute;
   display: flex;

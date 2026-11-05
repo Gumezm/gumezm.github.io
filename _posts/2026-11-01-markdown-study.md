@@ -123,11 +123,11 @@ func _ready() -> void:
 - **图床**(不推荐)
 - **格式**:`[![图片说明](图片URL)](跳转URL)`
 
-![Medic](/assets/img/gallery/2026-10-31-Medic-Cat.webp)
+![Medic](/assets/img/gallery/2026-10-31-Medic--Medic猫猫.webp)
 
 - 使用**HTML**来调整图片大小和位置
 
-<img src="/assets/img/gallery/2026-10-31-Medic-Cat.webp" width="50" alt="Medic Cat">
+<img src="/assets/img/gallery/2026-10-31-Medic--Medic猫猫.webp" width="50" alt="Medic Cat">
 
 ## 三、其他操作
 

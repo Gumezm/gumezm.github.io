@@ -6,6 +6,7 @@
     <img id="gallery-lb-img" alt="" decoding="async" data-proofer-ignore>
     <figcaption>
       <span id="gallery-lb-caption"></span>
+      <span id="gallery-lb-desc"></span>
     </figcaption>
   </figure>
 </div>
@@ -22,6 +23,7 @@
     const lightbox = document.getElementById('gallery-lightbox');
     const lbImg = document.getElementById('gallery-lb-img');
     const lbCaption = document.getElementById('gallery-lb-caption');
+    const lbDesc = document.getElementById('gallery-lb-desc');
     const lbPrev = lightbox.querySelector('.gallery-lb-prev');
     const lbNext = lightbox.querySelector('.gallery-lb-next');
 
@@ -91,6 +93,9 @@
       lbImg.src = link.dataset.full;
       lbImg.alt = link.dataset.name || '照片';
       lbCaption.textContent = link.dataset.name || '';
+      /* 介绍可选：没有时整行隐藏，名称下方不留空行 */
+      lbDesc.textContent = link.dataset.desc || '';
+      lbDesc.hidden = !link.dataset.desc;
       lbPrev.hidden = lbNext.hidden = visibleLinks.length < 2;
 
       const next = visibleLinks[(currentIndex + 1) % visibleLinks.length];
