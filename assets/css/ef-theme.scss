@@ -172,6 +172,8 @@ html[data-ef='ef'][data-bs-theme='dark'] {
 /* shared by both themes */
 html[data-ef='ef'] {
   --ef-link-hover: #2dbaba;
+  /* 页面主标题：列表页与文章页共用一个字号，保证两处永远等大 */
+  --ef-title-size: clamp(1.9rem, 3.6vw, 2.5rem);
 }
 
 /* ---------- 2. base ---------- */
@@ -515,9 +517,10 @@ html[data-ef='ef'] .ef-list-head-main {
 html[data-ef='ef'] .ef-list-title {
   margin: 0;
   color: var(--ef-ink);
-  font-size: 1.9rem;
+  font-size: var(--ef-title-size);
   font-weight: 800;
-  letter-spacing: 0.02em;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
 }
 
 html[data-ef='ef'] .ef-list-count {
@@ -673,9 +676,11 @@ html[data-ef='ef'] article > header .ef-post-eyebrow {
 }
 
 html[data-ef='ef'] article > header h1 {
+  /* Chirpy 给 h1 的 3rem 上边距会把标题压到眉题下方很远处；清零后与列表页同高起始 */
+  margin-top: 0;
   margin-bottom: 0.75rem;
   color: var(--ef-ink);
-  font-size: clamp(1.9rem, 3.6vw, 2.5rem);
+  font-size: var(--ef-title-size);
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.01em;
@@ -1177,9 +1182,9 @@ html[data-ef='ef'] #panel-wrapper .post-tag:active {
 html[data-ef='ef'] .dynamic-title {
   margin-bottom: 1.75rem;
   color: var(--ef-ink);
-  font-size: clamp(1.75rem, 3vw, 2.1rem);
+  font-size: var(--ef-title-size);
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
 }
 
 html[data-ef='ef'] #archives {
