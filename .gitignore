@@ -65,3 +65,6 @@ desktop.ini
 
 # ZCode workspace files (local tooling, not part of the site)
 .zcode/
+
+# WorkBuddy 工作区数据（会话记忆、本地任务状态），只在本地维护
+.workbuddy/
