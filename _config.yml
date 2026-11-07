@@ -23,8 +23,8 @@ description: >- # used by seo meta and the atom feed
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
-# 正式站点由 Cloudflare Pages 承接；根域 seija.org 301 到 www，故用 www。
-url: "https://www.seija.org"
+# 正式站点由 Cloudflare Pages 承接；博客已由 www.seija.org 迁移至 blog.seija.org。
+url: "https://blog.seija.org"
 
 github:
   username: Gumezm # change to your GitHub username
