@@ -270,11 +270,8 @@ html[data-ef='ef'] #sidebar {
   border-right: 1px solid var(--ef-rule);
 }
 
-/* EF 模式只显示方形头像（site.avatar_ef），隐藏 ORI 的原头像；圆角 10px、无边框 */
-html[data-ef='ef'] #avatar > img:not(.ef-only) {
-  display: none;
-}
-
+/* 头像：两套主题共用同一张方形图（site.avatar），统一 10px 圆角、无描边。
+   数值与 jekyll-theme-chirpy.scss 的 `#avatar` 保持一致。 */
 html[data-ef='ef'] #avatar,
 html[data-ef='ef'] #avatar img {
   border-radius: 10px !important;

@@ -284,6 +284,17 @@ body.gallery-lb-open {
   }
 }
 
+/* --- Avatar --- */
+
+/* ORI 也采用 EF 的圆角方形头像：覆盖 Bootstrap 的 .rounded-circle(50%)。
+   10px 与 ef-theme.scss 里 `html[data-ef='ef'] #avatar` 的数值保持一致，
+   两套主题切换时头像外观不再跳动；描边由 #avatar 的 box-shadow 自带，
+   它会跟随 border-radius 一起变成圆角方形。 */
+#avatar,
+#avatar img {
+  border-radius: 10px !important;
+}
+
 /* --- Theme toggle --- */
 
 /* 站点只提供 Light / Dark，隐藏主题自带的 system 选项 */

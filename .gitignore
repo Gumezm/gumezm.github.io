@@ -51,6 +51,10 @@ assets/js/dist
 # Gallery originals (processed copies live in assets/img/gallery)
 photos_src
 
+# 头像只保留 avatar.png 入库，其余原始/备用头像不入库
+assets/img/.avatar.png
+assets/img/avatar.svg
+
 # Temporary image workspace
 .addimage/
 

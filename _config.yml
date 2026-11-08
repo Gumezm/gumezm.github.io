@@ -99,10 +99,8 @@ theme_mode: # [light | dark]，留空则显示 Light / Dark 切换按钮
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "/assets/img/avatar.svg"
-
-# the square avatar used by the EF theme (falls back to `avatar` when empty)
-avatar_ef: "/assets/img/avatar.png"
+# 全站统一使用这张方形原图，ORI 与 EF 共用（圆角由 CSS 统一为 10px）
+avatar: "/assets/img/avatar.png"
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
