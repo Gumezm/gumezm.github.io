@@ -1,0 +1,29 @@
+# 推送到 CNB 后镜像到 GitHub
+# 密钥：https://cnb.cool/Gumezm/keystore/-/blob/main/gh.yml
+
+.pipeline-mirror: &pipeline-mirror
+  name: mirror-to-github
+  imports:
+    - https://cnb.cool/Gumezm/keystore/-/blob/main/gh.yml
+  env:
+    GITHUB_REPO: Gumezm/gumezm.github.io
+  stages:
+    - name: push
+      script:
+        - git config --global user.email "cnb-mirror@users.noreply.github.com"
+        - git config --global user.name "CNB Mirror"
+        - git remote add github "https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git"
+        - git fetch origin "+refs/heads/*:refs/remotes/origin/*" --prune
+        - git fetch origin "+refs/tags/*:refs/tags/*" || true
+        - git push github --force --prune "refs/remotes/origin/*:refs/heads/*"
+        - git push github --force --tags
+
+main:
+  push:
+    - *pipeline-mirror
+
+"$":
+  push:
+    - *pipeline-mirror
+  tag_push:
+    - *pipeline-mirror
